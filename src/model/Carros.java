@@ -7,9 +7,12 @@ public class Carros {
     private int ano_fabricacao;
     private int ano_modelo;
     private String chassi;
-    private Observacoes_carros obeservacoes;
+    private String obeservacoes;
     private Cores cor;
-    private Modelos modelo;
+    private String modelo;
+    private String motorizacao;
+    private String placa;
+    private Custos custo;
 
     public int getId() {
         return id;
@@ -51,11 +54,11 @@ public class Carros {
         this.chassi = chassi;
     }
 
-    public Observacoes_carros getObeservacoes() {
+    public String getObeservacoes() {
         return obeservacoes;
     }
 
-    public void setObeservacoes(Observacoes_carros obeservacoes) {
+    public void setObeservacoes(String obeservacoes) {
         this.obeservacoes = obeservacoes;
     }
 
@@ -67,12 +70,39 @@ public class Carros {
         this.cor = cor;
     }
 
-    public Modelos getModelo() {
+    public String getModelo() {
         return modelo;
     }
 
-    public void setModelo(Modelos modelo) {
+    public void setModelo(String modelo) {
         this.modelo = modelo;
     }
+
+    public String getMotorizacao() {
+        return motorizacao;
+    }
+
+    public void setMotorizacao(String motorizacao) {
+        this.motorizacao = motorizacao;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public Custos getCusto() {
+        return custo;
+    }
+
+    public void setCusto(Custos custo) {
+        this.custo = custo;
+    }
+    
+
+   
     
 }
