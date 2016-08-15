@@ -6,7 +6,7 @@ public class Vendas {
 
     private int id;
     private Date dt_venda;
-    private Cartas_de_creditos cartas;
+    private CartasDeCreditos cartas;
     private Clientes cliente;
     private Carros carro;
 
@@ -26,11 +26,11 @@ public class Vendas {
         this.dt_venda = dt_venda;
     }
 
-    public Cartas_de_creditos getCartas() {
+    public CartasDeCreditos getCartas() {
         return cartas;
     }
 
-    public void setCartas(Cartas_de_creditos cartas) {
+    public void setCartas(CartasDeCreditos cartas) {
         this.cartas = cartas;
     }
 

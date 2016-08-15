@@ -1,6 +1,6 @@
 package model;
 
-public class Cartas_de_creditos {
+public class CartasDeCreditos {
 
     private int id;
     private int cota;
