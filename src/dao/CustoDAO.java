@@ -19,12 +19,12 @@ public class CustoDAO {
     }
     public boolean inset(Custos custo){
          if(db.open()){
-            sql = "INSERT INTO tb_custos(cus_nome, cus_valor, cus_valor_total)VALUES(?,?,?)";
+            sql = "INSERT INTO tb_custos(cus_nome, cus_valor)VALUES(?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, custo.getNome());
                 ps.setInt(2, custo.getValor());
-                ps.setInt(3, custo.getValor_final());
+                
                 
                 if(ps.executeUpdate() == 1){
                     ps.close();

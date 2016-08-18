@@ -143,5 +143,34 @@ public class ClienteDAO {
         db.close();
         return null;        
     }
-    
+     public List<Clientes> selectALL(){
+        if(db.open()){            
+            List<Clientes> clientes = new ArrayList();
+            
+            sql ="SELECT * FROM tb_clientes";
+            try{
+                ps = db.connerction.prepareStatement(sql);
+                rs = ps.executeQuery();
+                while(rs.next()){
+                Clientes cli = new Clientes();
+                AprovacaoDAO apr = new AprovacaoDAO();
+                cli.setId(rs.getInt(1));
+                cli.setNome(rs.getString(2));
+                cli.setCpf(rs.getString(3));
+                cli.setAgencia(rs.getString(4));
+                cli.setConta(rs.getString(5));
+                cli.setAprovacao(apr.select(rs.getInt(6)));                
+                clientes.add(cli);
+                }
+                rs.close();
+                ps.close();
+                db.close();
+                return clientes;
+            }catch(SQLException error){
+             System.out.println("ERROR: " + error.toString());
+            }
+        }
+        db.close();               
+        return null;
+    }
 }

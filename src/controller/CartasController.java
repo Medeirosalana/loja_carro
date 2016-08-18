@@ -40,6 +40,17 @@ public class CartasController {
         }
         
     }
+     public boolean atualizar(int id, int cota, int grupo, int proposta, int prazo, int valor_final, int valor_inicial){
+    CartasDeCreditos carta = new CartasDeCreditos();    
+        carta.setId(id);
+        carta.setCota(cota);
+        carta.setGrupo(grupo);
+        carta.setProposta(proposta);
+        carta.setPrazo(prazo);
+        carta.setValor_final(valor_final);
+        carta.setValor_inicial(valor_inicial);              
+        return dao.update(carta);
+    }
     
     
 }
