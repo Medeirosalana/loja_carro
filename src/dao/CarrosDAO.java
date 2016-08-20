@@ -19,19 +19,19 @@ public class CarrosDAO {
     }
     public boolean inset(Carros carro){
         if(db.open()){
-            sql = "INSERT INTO tb_carros(car_renavam, car_ano_fabricacao, car_ano_modelo, car_chassi, car_cus_id, car_cor_id, car_motorizacao, car_observacao, car_placa, car_modelo)VALUES(?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO tb_carros(car_renavam, car_ano_fabricacao, car_ano_modelo, car_chassi, car_cor_id, car_motorizacao, car_observacao, car_placa, car_modelo)VALUES(?,?,?,?,?,?,?,?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, carro.getRenavam());
                 ps.setInt(2, carro.getAno_fabricacao());
                 ps.setInt(3, carro.getAno_modelo());
                 ps.setString(4, carro.getChassi());
-                ps.setInt(5, carro.getCusto().getId());
-                ps.setInt(6, carro.getCor().getId());
-                ps.setString(7, carro.getMotorizacao());
-                ps.setString(8, carro.getObeservacoes());
-                ps.setString(9, carro.getPlaca());
-                ps.setString(10, carro.getModelo());
+               
+                ps.setInt(5, carro.getCor().getId());
+                ps.setString(6, carro.getMotorizacao());
+                ps.setString(7, carro.getObeservacoes());
+                ps.setString(8, carro.getPlaca());
+                ps.setString(9, carro.getModelo());
                 if(ps.executeUpdate() == 1){
                     ps.close();
                     db.close();

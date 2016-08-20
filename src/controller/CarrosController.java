@@ -15,7 +15,7 @@ public class CarrosController {
     public CarrosController() {
         dao = new CarrosDAO();
     }
-    public boolean adicionar(String renavam, String chassi, int ano_fabricacao, int ano_modelo, String modelo, String motorizacao, String placa, String cor){
+    public boolean adicionar(String renavam, String chassi, int ano_fabricacao, int ano_modelo, String modelo, String motorizacao, String placa, String cor, String observacao){
         Cores c = new Cores();
         CorDAO cdao = new CorDAO();
         Carros carro = new Carros();
@@ -26,6 +26,7 @@ public class CarrosController {
         carro.setModelo(modelo.toUpperCase());
         carro.setMotorizacao(motorizacao);
         carro.setPlaca(placa.toUpperCase());
+        carro.setObeservacoes(observacao);
         carro.setCor(c);
         return dao.inset(carro);
     }
@@ -57,6 +58,8 @@ public class CarrosController {
         cartas.setValor_final(valor_final);        
         return dao.update(carro);
     }
-    
+
+   
+     
     
 }
