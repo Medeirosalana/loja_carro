@@ -18,6 +18,31 @@ public class CorDAO {
     public CorDAO() {
         db = new DataBase();
     }
+    public Cores select(int id){
+        if(db.open()){
+            Cores cor = new Cores();
+            sql = "SELECT * FROM tb_cores WHERE cor_id = ?";
+            try{
+                ps = db.connerction.prepareStatement(sql);
+                ps.setInt(1, id);
+                rs = ps.executeQuery();
+                if (rs.next()){
+                    cor.setId(rs.getInt(1));
+                    cor.setCor(rs.getString(2));
+
+                    rs.close();
+                    ps.close();
+                    db.close();
+                    return cor;
+                  
+                }
+            }catch(SQLException error){
+             System.out.println("ERROR: " + error.toString());
+            }
+        }
+        db.close();
+        return null;
+    }
      public List<Cores> selectALL(){
         if(db.open()){            
             List<Cores> cores = new ArrayList();
@@ -70,29 +95,7 @@ public class CorDAO {
         db.close();
         return null;        
     }
-     public Cores select(int id){
-        if(db.open()){
-            Cores cor = new Cores();
-            sql = "SELECT * FROM tb_cores WHERE cor_id = ?";
-            try{
-                ps = db.connerction.prepareStatement(sql);
-                ps.setInt(1, id);
-                rs = ps.executeQuery();
-                if (rs.next()){
-                    cor.setId(rs.getInt(1));
-                    cor.setCor(rs.getString(2));
-
-                    rs.close();
-                    ps.close();
-                    db.close();
-                    return cor;
-                }
-            }catch(SQLException error){
-             System.out.println("ERROR: " + error.toString());
-            }
-        }
-        db.close();
-        return null;
+     
     }
     
-}
+

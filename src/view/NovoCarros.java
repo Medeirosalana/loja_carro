@@ -7,7 +7,9 @@ package view;
 
 import controller.CarrosController;
 import dao.CorDAO;
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Carros;
 import model.Cores;
 
@@ -17,11 +19,13 @@ import model.Cores;
  */
 public class NovoCarros extends javax.swing.JFrame {
     Carros car;
+    
     /**
      * Creates new form NovoCarros
      */
     public NovoCarros() {
         initComponents();
+       
          
     }
 
@@ -97,6 +101,11 @@ public class NovoCarros extends javax.swing.JFrame {
         lbAnofabricacao.setText("Ano Fabricação");
 
         cbCores.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione uma cor", "Azul", "Branco", "Cinza", "Preto" }));
+        cbCores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCoresActionPerformed(evt);
+            }
+        });
 
         lbModelo.setText("Modelo");
 
@@ -232,16 +241,19 @@ public class NovoCarros extends javax.swing.JFrame {
             CarrosController control = new CarrosController();
             CorDAO dao = new CorDAO();
             Cores cor = new Cores();
-           cor = dao.select(1);
+           
             if(car == null){
-                if(control.adicionar(tfRenavam.getText(), tfchassi.getText(),Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()), tfmodelo.getText(), 
-                        tfmotorizacao.getText(),tfplaca.getText() , cor  , taObs.getText())){
+                       
+                        System.out.println(dao.select(cbCores.getSelectedIndex()));
+                    if(control.adicionar(tfRenavam.getText(), tfchassi.getText(),Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()), tfmodelo.getText(), 
+                        tfmotorizacao.getText(),tfplaca.getText() ,dao.select(cbCores.getSelectedIndex()) , taObs.getText())){
                     
                     JOptionPane.showMessageDialog(null, "Carro adicionado com sucesso");
-                    JOptionPane.showMessageDialog(null, cbCores.getSelectedIndex());
+                    
                     limpar();               
                 }else{
-                JOptionPane.showMessageDialog(null, "Erro ao adicionar");
+                       
+                JOptionPane.showMessageDialog(null, "Erro ao adicionar"+ cbCores.getSelectedIndex());
                 }
             }else{
                 if(control.atualizar(car.getId(), tfRenavam.getText(), Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()),tfchassi.getText(), tfmotorizacao.getText(), taObs.getText(), tfmodelo.getText())){
@@ -252,16 +264,16 @@ public class NovoCarros extends javax.swing.JFrame {
             
             }
         
-        }
-//        CorDAO cdao = new CorDAO();
-//        Cores c = new Cores();
-//        
-//         JOptionPane.showMessageDialog(null, cdao.select(cbCores.getSelectedIndex()).toString());
+        }       
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         NovoCarros.this.setVisible(false);
     }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void cbCoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCoresActionPerformed
+       
+    }//GEN-LAST:event_cbCoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,5 +344,5 @@ public class NovoCarros extends javax.swing.JFrame {
     taObs.setText("");
     cbCores.setSelectedIndex(0);
     }
-
+    
 }

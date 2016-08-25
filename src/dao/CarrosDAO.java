@@ -19,7 +19,7 @@ public class CarrosDAO {
     }
     public boolean inset(Carros carro){
         if(db.open()){
-            sql = "INSERT INTO tb_carros(car_renavam, car_ano_fabricacao, car_ano_modelo, car_chassi, car_cor_id, car_mototizacao, car_observacoes, car_placa, car_modelo)VALUES(?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO tb_carros(car_renavam, car_ano_fabricacao, car_ano_modelo, car_chassi, car_cor_id, car_motorizacao, car_observacoes, car_placa, car_modelo)VALUES(?,?,?,?,?,?,?,?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, carro.getRenavam());
@@ -45,10 +45,10 @@ public class CarrosDAO {
     }
     public boolean delete(Carros carro){
         if(db.open()){
-        sql = "DELETE FROM tb_carros WHERE car_id = ?";
+        sql = "DELETE FROM tb_carros WHERE car_placa = ?";
             try{
                 ps = db.connerction.prepareStatement(sql);
-                ps.setInt(1, carro.getId());
+                ps.setString(1, carro.getPlaca());
                 if(ps.executeUpdate() == 1){
                 ps.close();
                 db.close();
@@ -63,7 +63,7 @@ public class CarrosDAO {
     }
     public boolean update(Carros carro){
         if(db.open()){
-        sql = "UPDATE tb_carros SET car_renavam = ?, car_ano_fabricacao = ?,car_ano_modelo = ?, car_chassi = ?, car_mototizacao = ?, car_observacoes = ?, car_modelo = ?  WHERE car_id =?";
+        sql = "UPDATE tb_carros SET car_renavam = ?, car_ano_fabricacao = ?,car_ano_modelo = ?, car_chassi = ?, car_motorizacao = ?, car_observacoes = ?, car_modelo = ?  WHERE car_id =?";
             try{
             ps = db.connerction.prepareStatement(sql);
             ps.setString(1, carro.getRenavam());
@@ -106,10 +106,10 @@ public class CarrosDAO {
                 carro.setChassi(rs.getString(5));
                
                 
-                carro.setPlaca(rs.getString(8));
-                carro.setObeservacoes(rs.getString(9));
-                carro.setMotorizacao(rs.getString(10));
-                carro.setModelo(rs.getString(11));
+                carro.setPlaca(rs.getString(7));
+                carro.setObeservacoes(rs.getString(8));
+                carro.setMotorizacao(rs.getString(9));
+                carro.setModelo(rs.getString(10));
                 carros.add(carro);
                 }
                 rs.close();
@@ -144,11 +144,11 @@ public class CarrosDAO {
                 carro.setAno_modelo(rs.getInt(4));
                 carro.setChassi(rs.getString(5));
                
-                carro.setCor(dao.select(rs.getInt(7)));
-                carro.setPlaca(rs.getString(8));
-                carro.setObeservacoes(rs.getString(9));
-                carro.setMotorizacao(rs.getString(10));
-                carro.setModelo(rs.getString(11));
+                carro.setCor(dao.select(rs.getInt(6)));
+                carro.setPlaca(rs.getString(7));
+                carro.setObeservacoes(rs.getString(8));
+                carro.setMotorizacao(rs.getString(9));
+                carro.setModelo(rs.getString(10));
                 carros.add(carro);
                 }
                 rs.close();
@@ -179,11 +179,11 @@ public class CarrosDAO {
                 carro.setAno_modelo(rs.getInt(4));
                 carro.setChassi(rs.getString(5));
                
-                carro.setCor(dao.select(rs.getInt(7)));
-                carro.setPlaca(rs.getString(8));
-                carro.setObeservacoes(rs.getString(9));
-                carro.setMotorizacao(rs.getString(10));
-                carro.setModelo(rs.getString(11));
+                carro.setCor(dao.select(rs.getInt(6)));
+                carro.setPlaca(rs.getString(7));
+                carro.setObeservacoes(rs.getString(8));
+                carro.setMotorizacao(rs.getString(9));
+                carro.setModelo(rs.getString(10));
                
                 rs.close();
                 ps.close();

@@ -19,21 +19,24 @@ public class CarrosController {
         Cores c = new Cores();
         CorDAO cdao = new CorDAO();
         Carros carro = new Carros();
-        carro.setRenavam(renavam.toUpperCase());
-        carro.setChassi(chassi.toUpperCase());
+        
+        carro.setRenavam(renavam);
+        carro.setChassi(chassi);
         carro.setAno_fabricacao(ano_fabricacao);
         carro.setAno_modelo(ano_modelo);
-        carro.setModelo(modelo.toUpperCase());
+        carro.setModelo(modelo);
         carro.setMotorizacao(motorizacao);
         carro.setPlaca(placa.toUpperCase());
         carro.setObeservacoes(observacao);
-        carro.setCor(c);
-        System.out.println(carro.toString());
+        cdao.selectALL();
+        carro.setCor(cor);
+        
         return dao.inset(carro);
+        
     }
-     public boolean remover(int id){
+     public boolean remover(String placa){
         Carros carro = new Carros();
-        carro.setId(id);
+        carro.setPlaca(placa);
         return dao.delete(carro);
     }
      public List<Carros> listar(String filter){

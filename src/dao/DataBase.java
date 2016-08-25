@@ -8,10 +8,10 @@ public class DataBase {
 
     public Connection connerction = null;
     private final String DRIVE = "com.mysql.jdbc.Driver";
-    private final String DATABASE = "db_loja_carros";
+    private final String DATABASE = "loja_carros";
     private final String URL  = "jdbc:mysql://localhost:3306/"+ DATABASE;
     private final String USER = "root";
-    private final String PASSWORD = "senac";
+    private final String PASSWORD = "123456";
     
     public boolean open(){
         try{
