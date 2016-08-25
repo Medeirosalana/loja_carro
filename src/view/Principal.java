@@ -75,8 +75,9 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CarrosView car = new CarrosView();
+        CarroView car = new CarroView();
         car.setVisible(true);
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

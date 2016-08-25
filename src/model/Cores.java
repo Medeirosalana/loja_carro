@@ -20,5 +20,10 @@ public class Cores {
     public void setCor(String cor) {
         this.cor = cor;
     }
+
+    @Override
+    public String toString() {
+        return "Cores{" + "id=" + id + ", cor=" + cor + '}';
+    }
     
 }

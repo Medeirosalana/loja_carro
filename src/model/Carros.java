@@ -12,7 +12,7 @@ public class Carros {
     private String modelo;
     private String motorizacao;
     private String placa;
-    private Custos custo;
+    
 
     public int getId() {
         return id;
@@ -94,13 +94,12 @@ public class Carros {
         this.placa = placa;
     }
 
-    public Custos getCusto() {
-        return custo;
+    @Override
+    public String toString() {
+        return "Carros{" + "id=" + id + ", renavam=" + renavam + ", ano_fabricacao=" + ano_fabricacao + ", ano_modelo=" + ano_modelo + ", chassi=" + chassi + ", obeservacoes=" + obeservacoes + ", cor=" + cor.toString() + ", modelo=" + modelo + ", motorizacao=" + motorizacao + ", placa=" + placa + '}';
     }
 
-    public void setCusto(Custos custo) {
-        this.custo = custo;
-    }
+  
     
 
    

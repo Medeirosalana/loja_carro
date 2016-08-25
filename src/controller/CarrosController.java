@@ -15,7 +15,7 @@ public class CarrosController {
     public CarrosController() {
         dao = new CarrosDAO();
     }
-    public boolean adicionar(String renavam, String chassi, int ano_fabricacao, int ano_modelo, String modelo, String motorizacao, String placa, String cor, String observacao){
+    public boolean adicionar(String renavam, String chassi, int ano_fabricacao, int ano_modelo, String modelo, String motorizacao, String placa, Cores cor, String observacao){
         Cores c = new Cores();
         CorDAO cdao = new CorDAO();
         Carros carro = new Carros();
@@ -28,6 +28,7 @@ public class CarrosController {
         carro.setPlaca(placa.toUpperCase());
         carro.setObeservacoes(observacao);
         carro.setCor(c);
+        System.out.println(carro.toString());
         return dao.inset(carro);
     }
      public boolean remover(int id){
@@ -43,7 +44,7 @@ public class CarrosController {
         }
         
     }
-     public boolean atualizar(int id, String renavam, int ano_fabricacao, int ano_modelo, String chassi, String motorizacao, String observacao, String modelo, int valor_final){
+     public boolean atualizar(int id, String renavam, int ano_fabricacao, int ano_modelo, String chassi, String motorizacao, String observacao, String modelo ){
     Carros carro = new Carros();
     CartasDeCreditos cartas  = new CartasDeCreditos();
     CartaDeCreditoDAO cdao = new CartaDeCreditoDAO();
@@ -55,7 +56,7 @@ public class CarrosController {
         carro.setMotorizacao(motorizacao);
         carro.setObeservacoes(observacao);
         carro.setModelo(modelo.toUpperCase());
-        cartas.setValor_final(valor_final);        
+                
         return dao.update(carro);
     }
 

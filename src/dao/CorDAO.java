@@ -73,19 +73,19 @@ public class CorDAO {
      public Cores select(int id){
         if(db.open()){
             Cores cor = new Cores();
-            sql ="SELECT * FROM tb_cores WHERE cor_id";
+            sql = "SELECT * FROM tb_cores WHERE cor_id = ?";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setInt(1, id);
                 rs = ps.executeQuery();
-                if(rs.next()){
-                cor.setId(rs.getInt(1));
-                cor.setCor(rs.getString(2));
-                
-                rs.close();
-                ps.close();
-                db.close();
-                return cor;
+                if (rs.next()){
+                    cor.setId(rs.getInt(1));
+                    cor.setCor(rs.getString(2));
+
+                    rs.close();
+                    ps.close();
+                    db.close();
+                    return cor;
                 }
             }catch(SQLException error){
              System.out.println("ERROR: " + error.toString());
