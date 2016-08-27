@@ -18,17 +18,28 @@ import model.Cores;
  * @author a9211062
  */
 public class NovoCarros extends javax.swing.JFrame {
-    Carros car;
+   private DefaultTableModel mode ;
+   private Carros carro;
+    
     
     /**
      * Creates new form NovoCarros
      */
-    public NovoCarros() {
-        initComponents();
-       
+    public NovoCarros(Carros carros, DefaultTableModel model) {
+        
+        this.carro = carros;
+       this.mode = model;
+       initComponents();
          
     }
 
+   
+
+    
+
+    
+
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +49,7 @@ public class NovoCarros extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         taObs = new javax.swing.JTextArea();
         tfRenavam = new javax.swing.JTextField();
@@ -207,7 +219,7 @@ public class NovoCarros extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btNovo)
                     .addComponent(btCancelar))
@@ -235,33 +247,35 @@ public class NovoCarros extends javax.swing.JFrame {
     }//GEN-LAST:event_tfmodeloActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
-        if (tfRenavam.getText().equals("")||tfanofabricacao.getText().equals("")||tfAnomodelo.getText().equals("")||tfchassi.getText().equals("")||tfplaca.getText().equals("")||tfmotorizacao.getText().equals("")||tfmodelo.getText().equals("")){
+       Carros car = new Carros();
+       CarroView view = new CarroView();
+        if (tfRenavam.getText().equals("")||tfanofabricacao.getText().equals("")||tfAnomodelo.getText().equals("")||tfchassi.getText().equals("")||tfmotorizacao.getText().equals("")||tfmodelo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios");
         }else{
             CarrosController control = new CarrosController();
             CorDAO dao = new CorDAO();
             Cores cor = new Cores();
            
-            if(car == null){
-                       
-                        System.out.println(dao.select(cbCores.getSelectedIndex()));
+            if(car == null){                  
+                      
                     if(control.adicionar(tfRenavam.getText(), tfchassi.getText(),Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()), tfmodelo.getText(), 
                         tfmotorizacao.getText(),tfplaca.getText() ,dao.select(cbCores.getSelectedIndex()) , taObs.getText())){
-                    
+                    view.loadtable();
                     JOptionPane.showMessageDialog(null, "Carro adicionado com sucesso");
                     
-                    limpar();               
+                    limpar();
+                    
                 }else{
                        
-                JOptionPane.showMessageDialog(null, "Erro ao adicionar"+ cbCores.getSelectedIndex());
+                JOptionPane.showMessageDialog(null, "Erro ao adicionar");
                 }
-            }else{
+            }else {
                 if(control.atualizar(car.getId(), tfRenavam.getText(), Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()),tfchassi.getText(), tfmotorizacao.getText(), taObs.getText(), tfmodelo.getText())){
-                
+                view.loadtable();
                 }else{
                 JOptionPane.showMessageDialog(null, "Erro ao Editar");
                 }
-            
+////            control.atualizar(car.getId(), tfRenavam.getText(), Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()),tfchassi.getText(), tfmotorizacao.getText(), taObs.getText(), tfmodelo.getText());
             }
         
         }       
@@ -305,7 +319,8 @@ public class NovoCarros extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NovoCarros().setVisible(true);
+                new NovoCarros(carro, mode).setVisible;
+               
             }
         });
     }
@@ -314,6 +329,7 @@ public class NovoCarros extends javax.swing.JFrame {
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btNovo;
     private javax.swing.JComboBox cbCores;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbAnofabricacao;
@@ -344,5 +360,19 @@ public class NovoCarros extends javax.swing.JFrame {
     taObs.setText("");
     cbCores.setSelectedIndex(0);
     }
+    public void desabilitar(){
+    tfplaca.setEnabled(false);
+    tfRenavam.setEnabled(true);
+    tfanofabricacao.setEnabled(true);
+    tfAnomodelo.setEnabled(true);
+    tfchassi.setEnabled(true);
+    tfmotorizacao.setEnabled(true);
+    tfmodelo.setEnabled(true);
+    taObs.setEnabled(true);
+    cbCores.setEnabled(false);        
+    }
+     
     
-}
+    }
+    
+

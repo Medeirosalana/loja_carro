@@ -16,9 +16,7 @@ public class CarrosController {
         dao = new CarrosDAO();
     }
     public boolean adicionar(String renavam, String chassi, int ano_fabricacao, int ano_modelo, String modelo, String motorizacao, String placa, Cores cor, String observacao){
-        Cores c = new Cores();
-        CorDAO cdao = new CorDAO();
-        Carros carro = new Carros();
+       Carros carro = new Carros();
         
         carro.setRenavam(renavam);
         carro.setChassi(chassi);
@@ -27,8 +25,7 @@ public class CarrosController {
         carro.setModelo(modelo);
         carro.setMotorizacao(motorizacao);
         carro.setPlaca(placa.toUpperCase());
-        carro.setObeservacoes(observacao);
-        cdao.selectALL();
+        carro.setObeservacoes(observacao);       
         carro.setCor(cor);
         
         return dao.inset(carro);
@@ -49,18 +46,18 @@ public class CarrosController {
     }
      public boolean atualizar(int id, String renavam, int ano_fabricacao, int ano_modelo, String chassi, String motorizacao, String observacao, String modelo ){
     Carros carro = new Carros();
-    CartasDeCreditos cartas  = new CartasDeCreditos();
-    CartaDeCreditoDAO cdao = new CartaDeCreditoDAO();
+    
         carro.setId(id);
-        carro.setRenavam(renavam.toUpperCase());
+        carro.setRenavam(renavam);
         carro.setAno_fabricacao(ano_fabricacao);
         carro.setAno_modelo(ano_modelo);
-        carro.setChassi(chassi.toUpperCase());
+        carro.setChassi(chassi);
         carro.setMotorizacao(motorizacao);
         carro.setObeservacoes(observacao);
-        carro.setModelo(modelo.toUpperCase());
-                
+        carro.setModelo(modelo);        
+//         System.out.println(carro.toString());       
         return dao.update(carro);
+         
     }
 
    

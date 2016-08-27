@@ -6,10 +6,11 @@
 package view;
 
 import controller.CarrosController;
+import dao.CarrosDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Carros;
-import model.Cores;
+
 
 
 /**
@@ -17,7 +18,7 @@ import model.Cores;
  * @author a9211062
  */
 public class CarroView extends javax.swing.JFrame {
-
+   DefaultTableModel model;
     /**
      * Creates new form CarroView
      */
@@ -74,11 +75,11 @@ public class CarroView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Modelo", "Ano Modelo", "Ano Fabricação", "Placa"
+                "ID", "Modelo", "Ano Modelo", "Ano Fabricação", "Placa"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -105,15 +106,15 @@ public class CarroView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btNovo)
                     .addComponent(btExcluir)
@@ -127,8 +128,9 @@ public class CarroView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
-        NovoCarros novo = new NovoCarros();
+        NovoCarros novo = new NovoCarros(null, model);
         novo.setVisible(true);
+        CarroView.this.setVisible(false);
         loadtable();
     }//GEN-LAST:event_btNovoActionPerformed
 
@@ -141,10 +143,11 @@ public class CarroView extends javax.swing.JFrame {
         }else{
         Carros carro = new Carros();   
               
-        carro.setAno_fabricacao((int) jTable1.getValueAt(i[0], 2));
-        carro.setAno_modelo((int) jTable1.getValueAt(i[0], 1));
-         carro.setPlaca((String) jTable1.getValueAt(i[0], 3));
-        carro.setModelo((String) jTable1.getValueAt(i[0], 0));
+        carro.setAno_fabricacao((int) jTable1.getValueAt(i[0], 3));
+        carro.setAno_modelo((int) jTable1.getValueAt(i[0], 2));
+         carro.setPlaca((String) jTable1.getValueAt(i[0],4));
+        carro.setModelo((String) jTable1.getValueAt(i[0], 1));
+        carro.setId((int) jTable1.getValueAt(i[0], 0));
        
         int resposta = JOptionPane.showConfirmDialog(null, "Dejesa excluir "+ carro.getModelo()+" ?");
             if (resposta == 0){
@@ -158,7 +161,22 @@ public class CarroView extends javax.swing.JFrame {
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-      
+      int i [] = jTable1.getSelectedRows();
+        if(i.length == 0){
+            JOptionPane.showMessageDialog(null, "Selecione um contato");
+        }else if (i.length > 1){
+            JOptionPane.showMessageDialog(null, "Selecione apenas um contato");
+        }else{       
+            Carros carro = new Carros();
+            CarrosDAO dao = new CarrosDAO();
+           dao.selectPlaca((String) jTable1.getValueAt(i[0], 4));
+            
+        NovoCarros novo = new NovoCarros(carro , model);
+        novo.setVisible(true);
+        novo.desabilitar();
+        
+        
+        }
     }//GEN-LAST:event_btEditarActionPerformed
 
     /**
@@ -204,14 +222,15 @@ public class CarroView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-    private  void loadtable(){
+    public  void loadtable(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         for(Carros carro: new CarrosController().listar(null)){
-        model.addRow(new Object[]{ carro.getModelo(),carro.getAno_modelo(), carro.getAno_fabricacao(),carro.getPlaca()});
+        model.addRow(new Object[]{  carro.getId(),carro.getModelo(),carro.getAno_modelo(), carro.getAno_fabricacao(),carro.getPlaca()});
             
         }
     
     }
+    
 
 }
