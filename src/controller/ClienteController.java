@@ -2,11 +2,11 @@ package controller;
 
 import dao.AprovacaoDAO;
 import dao.ClienteDAO;
-import dao.CustoDAO;
+import dao.CustoCarrosDAO;
 import java.util.List;
 import model.Aprovacao;
 import model.Clientes;
-import model.Custos;
+import model.CustosCarros;
 
 public class ClienteController {
 

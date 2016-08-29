@@ -19,7 +19,7 @@ public class CarrosDAO {
     }
     public boolean inset(Carros carro){
         if(db.open()){
-            sql = "INSERT INTO tb_carros(car_renavam, car_ano_fabricacao, car_ano_modelo, car_chassi, car_cor_id, car_mototizacao, car_observacoes, car_placa, car_modelo)VALUES(?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO tb_carros(car_renavam, car_ano_fabricacao, car_ano_modelo, car_chassi, car_cor_id, car_motorizacao, car_observacoes, car_placa, car_modelo)VALUES(?,?,?,?,?,?,?,?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, carro.getRenavam());
@@ -63,7 +63,7 @@ public class CarrosDAO {
     }
     public boolean update(Carros carro){
         if(db.open()){
-        sql = "UPDATE tb_carros SET car_renavam = ?, car_ano_fabricacao = ?, car_ano_modelo = ?, car_chassi = ?, car_mototizacao = ?, car_observacoes = ?, car_modelo = ?  WHERE car_id = ?";
+        sql = "UPDATE tb_carros SET car_renavam = ?, car_ano_fabricacao = ?, car_ano_modelo = ?, car_chassi = ?, car_motorizacao = ?, car_observacoes = ?, car_modelo = ?  WHERE car_id = ?";
             try{
             ps = db.connerction.prepareStatement(sql);
             ps.setString(1, carro.getRenavam());
@@ -98,7 +98,7 @@ public class CarrosDAO {
                 rs = ps.executeQuery();
                 while(rs.next()){
                 Carros carro = new Carros();
-                CustoDAO daos = new CustoDAO();
+                CustoCarrosDAO daos = new CustoCarrosDAO();
                 CorDAO dao = new CorDAO();
                 carro.setId(rs.getInt(1));
                 carro.setRenavam(rs.getString(2));
@@ -137,7 +137,7 @@ public class CarrosDAO {
                 rs = ps.executeQuery();
                 while(rs.next()){
                 Carros carro = new Carros();
-                CustoDAO daos = new CustoDAO();
+                CustoCarrosDAO daos = new CustoCarrosDAO();
                 CorDAO dao = new CorDAO();
                 
                 carro.setRenavam(rs.getString(1));
@@ -223,7 +223,7 @@ public class CarrosDAO {
                 rs.close();
                 ps.close();
                 db.close();
-                return carro;
+               return carro;
                 }
             }catch(SQLException error){
              System.out.println("ERROR: " + error.toString());

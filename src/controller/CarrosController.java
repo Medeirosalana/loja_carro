@@ -27,7 +27,7 @@ public class CarrosController {
         carro.setPlaca(placa.toUpperCase());
         carro.setObeservacoes(observacao);       
         carro.setCor(cor);
-        
+       
         return dao.inset(carro);
         
     }
@@ -55,7 +55,7 @@ public class CarrosController {
         carro.setMotorizacao(motorizacao);
         carro.setObeservacoes(observacao);
         carro.setModelo(modelo);        
-//         System.out.println(carro.toString());       
+              
         return dao.update(carro);
          
     }

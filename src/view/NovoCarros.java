@@ -6,7 +6,9 @@
 package view;
 
 import controller.CarrosController;
+import dao.CarrosDAO;
 import dao.CorDAO;
+import java.sql.ResultSet;
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,18 +21,39 @@ import model.Cores;
  */
 public class NovoCarros extends javax.swing.JFrame {
    private DefaultTableModel mode ;
-   private Carros carro;
+   private Carros carr;
+ 
     
     
     /**
      * Creates new form NovoCarros
      */
-    public NovoCarros(Carros carros, DefaultTableModel model) {
+    public NovoCarros() {
         
-        this.carro = carros;
-       this.mode = model;
+       
        initComponents();
+     
          
+    }
+    
+    NovoCarros(Carros carro, DefaultTableModel model) {
+        this.mode = model;
+        this.carr = carro;
+        initComponents();
+        CarrosDAO dao = new CarrosDAO();
+        
+        Carros id = dao.selectPlaca(carro.getPlaca());
+       
+       formrenavam.setText(id.getRenavam());
+       tfanomodelo.setText(String.valueOf(id.getAno_fabricacao()));
+       tfanofabi.setText(Integer.toString(id.getAno_modelo()));
+        formplaca.setText(id.getPlaca());
+        tfchassi.setText(id.getChassi());
+        tfmotorizacao.setText(id.getMotorizacao());
+        tfmodelo.setText(id.getModelo());
+        tfCores.setText(id.getCor().getCor());
+        taObs.setText(id.getObeservacoes());
+        desabilitar();
     }
 
    
@@ -50,67 +73,69 @@ public class NovoCarros extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jPanel2 = new javax.swing.JPanel();
+        lbAnomodelo1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        taObs1 = new javax.swing.JTextArea();
+        tfmodelo1 = new javax.swing.JTextField();
+        lbMotorizacao1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lbPlaca1 = new javax.swing.JLabel();
+        lbAnofabricacao1 = new javax.swing.JLabel();
+        cbCores = new javax.swing.JComboBox();
+        lbModelo1 = new javax.swing.JLabel();
+        lbRenavam1 = new javax.swing.JLabel();
+        tfchassi1 = new javax.swing.JTextField();
+        lbChassi1 = new javax.swing.JLabel();
+        tfmotorizacao1 = new javax.swing.JTextField();
+        formanofabi = new javax.swing.JFormattedTextField();
+        formanomodelo = new javax.swing.JFormattedTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        btNovo = new javax.swing.JButton();
+        btCancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lbAnomodelo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taObs = new javax.swing.JTextArea();
-        tfRenavam = new javax.swing.JTextField();
-        tfAnomodelo = new javax.swing.JTextField();
-        tfplaca = new javax.swing.JTextField();
-        tfchassi = new javax.swing.JTextField();
         tfmodelo = new javax.swing.JTextField();
-        tfanofabricacao = new javax.swing.JTextField();
-        tfmotorizacao = new javax.swing.JTextField();
-        lbRenavam = new javax.swing.JLabel();
-        lbPlaca = new javax.swing.JLabel();
-        lbChassi = new javax.swing.JLabel();
-        lbAnomodelo = new javax.swing.JLabel();
-        lbAnofabricacao = new javax.swing.JLabel();
-        cbCores = new javax.swing.JComboBox();
-        lbModelo = new javax.swing.JLabel();
         lbMotorizacao = new javax.swing.JLabel();
-        btNovo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btCancelar = new javax.swing.JButton();
+        lbPlaca = new javax.swing.JLabel();
+        lbAnofabricacao = new javax.swing.JLabel();
+        lbModelo = new javax.swing.JLabel();
+        lbRenavam = new javax.swing.JLabel();
+        tfchassi = new javax.swing.JTextField();
+        lbChassi = new javax.swing.JLabel();
+        tfmotorizacao = new javax.swing.JTextField();
+        lbcor = new javax.swing.JLabel();
+        tfCores = new javax.swing.JTextField();
+        formrenavam = new javax.swing.JFormattedTextField();
+        formplaca = new javax.swing.JFormattedTextField();
+        tfanomodelo = new javax.swing.JTextField();
+        tfanofabi = new javax.swing.JTextField();
 
-        setTitle("Novo Carro");
-        setResizable(false);
+        jPanel2.setName("Dados"); // NOI18N
 
-        taObs.setColumns(20);
-        taObs.setRows(5);
-        jScrollPane1.setViewportView(taObs);
+        lbAnomodelo1.setText("Ano Modelo");
 
-        tfRenavam.addActionListener(new java.awt.event.ActionListener() {
+        taObs1.setColumns(20);
+        taObs1.setRows(5);
+        jScrollPane2.setViewportView(taObs1);
+
+        tfmodelo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfRenavamActionPerformed(evt);
+                tfmodelo1ActionPerformed(evt);
             }
         });
 
-        tfplaca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfplacaActionPerformed(evt);
-            }
-        });
+        lbMotorizacao1.setText("Motorização");
 
-        tfchassi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfchassiActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Observações");
 
-        tfmodelo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfmodeloActionPerformed(evt);
-            }
-        });
+        lbPlaca1.setText("Placa");
 
-        lbRenavam.setText("Renavam");
-
-        lbPlaca.setText("Placa");
-
-        lbChassi.setText("Chassi");
-
-        lbAnomodelo.setText("Ano Modelo");
-
-        lbAnofabricacao.setText("Ano Fabricação");
+        lbAnofabricacao1.setText("Ano Fabricação");
 
         cbCores.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione uma cor", "Azul", "Branco", "Cinza", "Preto" }));
         cbCores.addActionListener(new java.awt.event.ActionListener() {
@@ -119,9 +144,124 @@ public class NovoCarros extends javax.swing.JFrame {
             }
         });
 
-        lbModelo.setText("Modelo");
+        lbModelo1.setText("Modelo");
 
-        lbMotorizacao.setText("Motorização");
+        lbRenavam1.setText("Renavam");
+
+        tfchassi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfchassi1ActionPerformed(evt);
+            }
+        });
+
+        lbChassi1.setText("Chassi");
+
+        try {
+            formanofabi.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            formanomodelo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("LLL- ####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jFormattedTextField1.setToolTipText("");
+
+        try {
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbRenavam1)
+                            .addComponent(lbPlaca1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbChassi1)
+                            .addComponent(lbModelo1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfchassi1, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(tfmodelo1, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextField1)
+                            .addComponent(jFormattedTextField2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(lbMotorizacao1)
+                                    .addGap(26, 26, 26)
+                                    .addComponent(tfmotorizacao1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbCores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbAnofabricacao1)
+                                    .addComponent(lbAnomodelo1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(formanomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(formanofabi, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(38, 38, 38))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbRenavam1)
+                    .addComponent(lbAnomodelo1)
+                    .addComponent(formanomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbAnofabricacao1)
+                    .addComponent(lbPlaca1)
+                    .addComponent(formanofabi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfmotorizacao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbMotorizacao1)
+                    .addComponent(lbChassi1)
+                    .addComponent(tfchassi1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbModelo1)
+                    .addComponent(tfmodelo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        setTitle("Novo Carro");
+        setResizable(false);
 
         btNovo.setText("Novo");
         btNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -130,8 +270,6 @@ public class NovoCarros extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Observações");
-
         btCancelar.setText("Cancelar");
         btCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,87 +277,166 @@ public class NovoCarros extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1.setName("Dados"); // NOI18N
+
+        lbAnomodelo.setText("Ano Modelo");
+
+        taObs.setColumns(20);
+        taObs.setRows(5);
+        jScrollPane1.setViewportView(taObs);
+
+        tfmodelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfmodeloActionPerformed(evt);
+            }
+        });
+
+        lbMotorizacao.setText("Motorização");
+
+        jLabel1.setText("Observações");
+
+        lbPlaca.setText("Placa");
+
+        lbAnofabricacao.setText("Ano Fabricação");
+
+        lbModelo.setText("Modelo");
+
+        lbRenavam.setText("Renavam");
+
+        tfchassi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfchassiActionPerformed(evt);
+            }
+        });
+
+        lbChassi.setText("Chassi");
+
+        lbcor.setText("Cor");
+
+        tfCores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfCoresActionPerformed(evt);
+            }
+        });
+
+        try {
+            formrenavam.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            formplaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("LLL-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        formplaca.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        formplaca.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbRenavam)
                             .addComponent(lbPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbChassi)
                             .addComponent(lbModelo))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfRenavam, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lbAnofabricacao)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(tfanofabricacao))
-                                .addGroup(layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfchassi)
+                            .addComponent(tfmodelo)
+                            .addComponent(formrenavam, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(formplaca))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(lbAnomodelo)
-                                    .addGap(28, 28, 28)
-                                    .addComponent(tfAnomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfanomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(lbMotorizacao)
                                     .addGap(26, 26, 26)
-                                    .addComponent(tfmotorizacao)))
-                            .addComponent(cbCores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btNovo)
-                        .addGap(18, 18, 18)
-                        .addComponent(btCancelar)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(tfmotorizacao, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lbcor)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(tfCores, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbAnofabricacao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfanofabi, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbRenavam)
                     .addComponent(lbAnomodelo)
-                    .addComponent(tfRenavam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfAnomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(formrenavam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfanomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfanofabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbAnofabricacao)
-                    .addComponent(tfplaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbPlaca))
+                    .addComponent(lbPlaca)
+                    .addComponent(formplaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfanofabi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfmotorizacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbMotorizacao)
                     .addComponent(lbChassi)
                     .addComponent(tfchassi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbModelo)
-                    .addComponent(tfmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbModelo)
+                        .addComponent(tfmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbcor)
+                        .addComponent(tfCores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(93, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(255, Short.MAX_VALUE)
+                        .addComponent(btNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addComponent(btCancelar)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btNovo)
                     .addComponent(btCancelar))
@@ -230,14 +447,6 @@ public class NovoCarros extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfRenavamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfRenavamActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfRenavamActionPerformed
-
-    private void tfplacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfplacaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfplacaActionPerformed
-
     private void tfchassiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfchassiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfchassiActionPerformed
@@ -247,132 +456,149 @@ public class NovoCarros extends javax.swing.JFrame {
     }//GEN-LAST:event_tfmodeloActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
-       Carros car = new Carros();
-       CarroView view = new CarroView();
-        if (tfRenavam.getText().equals("")||tfanofabricacao.getText().equals("")||tfAnomodelo.getText().equals("")||tfchassi.getText().equals("")||tfmotorizacao.getText().equals("")||tfmodelo.getText().equals("")){
+      Carros carro = new Carros();
+       CarrosDAO dao = new CarrosDAO();
+       Carros i = dao.selectPlaca(carr.getPlaca());
+    
+    
+           
+        if (formrenavam.getText().equals("")||formanofabi.getText().equals("")||formanomodelo.getText().equals("")||tfchassi.getText().equals("")||tfmotorizacao.getText().equals("")||tfmodelo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Preencher todos os campos obrigatorios");
         }else{
             CarrosController control = new CarrosController();
-            CorDAO dao = new CorDAO();
-            Cores cor = new Cores();
-           
-            if(car == null){                  
-                      
-                    if(control.adicionar(tfRenavam.getText(), tfchassi.getText(),Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()), tfmodelo.getText(), 
-                        tfmotorizacao.getText(),tfplaca.getText() ,dao.select(cbCores.getSelectedIndex()) , taObs.getText())){
-                    view.loadtable();
-                    JOptionPane.showMessageDialog(null, "Carro adicionado com sucesso");
-                    
-                    limpar();
-                    
-                }else{
-                       
-                JOptionPane.showMessageDialog(null, "Erro ao adicionar");
-                }
-            }else {
-                if(control.atualizar(car.getId(), tfRenavam.getText(), Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()),tfchassi.getText(), tfmotorizacao.getText(), taObs.getText(), tfmodelo.getText())){
-                view.loadtable();
+         
+         
+         if(i == null){
+             
+         }else{
+             
+                if(control.atualizar(i.getId(), formrenavam.getText(), Integer.parseInt(tfanofabi.getText()), Integer.parseInt(tfanofabi.getText()),tfchassi.getText(), tfmotorizacao.getText(), taObs.getText(), tfmodelo.getText())){
+                 "LLL-####".replace("-", "");
+                    JOptionPane.showMessageDialog(null, "Editado com sucesso");
                 }else{
                 JOptionPane.showMessageDialog(null, "Erro ao Editar");
                 }
-////            control.atualizar(car.getId(), tfRenavam.getText(), Integer.parseInt(tfanofabricacao.getText()), Integer.parseInt(tfAnomodelo.getText()),tfchassi.getText(), tfmotorizacao.getText(), taObs.getText(), tfmodelo.getText());
+         }
+           
             }
-        
-        }       
+    
+              
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         NovoCarros.this.setVisible(false);
     }//GEN-LAST:event_btCancelarActionPerformed
 
+    private void tfCoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfCoresActionPerformed
+
+    private void tfmodelo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfmodelo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfmodelo1ActionPerformed
+
     private void cbCoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCoresActionPerformed
-       
+
     }//GEN-LAST:event_cbCoresActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NovoCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NovoCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NovoCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NovoCarros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void tfchassi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfchassi1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfchassi1ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NovoCarros(carro, mode).setVisible;
-               
-            }
-        });
+    public void open(){
+    NovoCarros novo = new NovoCarros();
+    novo.setVisible(true);
+    
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btNovo;
     private javax.swing.JComboBox cbCores;
+    private javax.swing.JFormattedTextField formanofabi;
+    private javax.swing.JFormattedTextField formanomodelo;
+    private javax.swing.JFormattedTextField formplaca;
+    private javax.swing.JFormattedTextField formrenavam;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbAnofabricacao;
+    private javax.swing.JLabel lbAnofabricacao1;
     private javax.swing.JLabel lbAnomodelo;
+    private javax.swing.JLabel lbAnomodelo1;
     private javax.swing.JLabel lbChassi;
+    private javax.swing.JLabel lbChassi1;
     private javax.swing.JLabel lbModelo;
+    private javax.swing.JLabel lbModelo1;
     private javax.swing.JLabel lbMotorizacao;
+    private javax.swing.JLabel lbMotorizacao1;
     private javax.swing.JLabel lbPlaca;
+    private javax.swing.JLabel lbPlaca1;
     private javax.swing.JLabel lbRenavam;
+    private javax.swing.JLabel lbRenavam1;
+    private javax.swing.JLabel lbcor;
     private javax.swing.JTextArea taObs;
-    private javax.swing.JTextField tfAnomodelo;
-    private javax.swing.JTextField tfRenavam;
-    private javax.swing.JTextField tfanofabricacao;
+    private javax.swing.JTextArea taObs1;
+    private javax.swing.JTextField tfCores;
+    private javax.swing.JTextField tfanofabi;
+    private javax.swing.JTextField tfanomodelo;
     private javax.swing.JTextField tfchassi;
+    private javax.swing.JTextField tfchassi1;
     private javax.swing.JTextField tfmodelo;
+    private javax.swing.JTextField tfmodelo1;
     private javax.swing.JTextField tfmotorizacao;
-    private javax.swing.JTextField tfplaca;
+    private javax.swing.JTextField tfmotorizacao1;
     // End of variables declaration//GEN-END:variables
     
     private void limpar(){
-    tfAnomodelo.setText("");
-    tfRenavam.setText("");
-    tfanofabricacao.setText("");
+    formanomodelo.setText("");
+    formrenavam.setText("");
+    formanofabi.setText("");
     tfchassi.setText("");
     tfmodelo.setText("");
     tfmotorizacao.setText("");
-    tfplaca.setText("");
+    formplaca.setText("");
     taObs.setText("");
-    cbCores.setSelectedIndex(0);
+    tfCores.setText("");
     }
     public void desabilitar(){
-    tfplaca.setEnabled(false);
-    tfRenavam.setEnabled(true);
-    tfanofabricacao.setEnabled(true);
-    tfAnomodelo.setEnabled(true);
+    formplaca.setEditable(false);
+    formrenavam.setEnabled(true);
+    formanofabi.setEnabled(true);
+    formanomodelo.setEnabled(true);
     tfchassi.setEnabled(true);
     tfmotorizacao.setEnabled(true);
     tfmodelo.setEnabled(true);
     taObs.setEnabled(true);
-    cbCores.setEnabled(false);        
+    tfCores.setEnabled(false);        
     }
-     
+    public static String clear(String placa){
+    return placa = placa.replace("-", "");
+    }
+    public void habilitar(){
+    formplaca.setEditable(false);
+    formrenavam.setEditable(false);
+    tfanomodelo.setEditable(false);
+    tfanofabi.setEditable(false);
+    tfchassi.setEditable(false);
+    tfmotorizacao.setEditable(false);
+    tfmodelo.setEditable(false);
+    taObs.setEditable(false);
+    tfCores.setEditable(false);  
     
     }
+   
+    
+     }
+    
+    
+    
     
 

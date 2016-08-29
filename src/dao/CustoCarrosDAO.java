@@ -5,25 +5,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Custos;
+import model.CustosCarros;
 
-public class CustoDAO {
+public class CustoCarrosDAO {
 
     private DataBase db;
     private PreparedStatement ps;
     private ResultSet rs;
     private String sql;
 
-    public CustoDAO() {
+    public CustoCarrosDAO() {
         db = new DataBase();
     }
-    public boolean inset(Custos custo){
+    public boolean inset(CustosCarros custo){
          if(db.open()){
-            sql = "INSERT INTO tb_custos(cus_nome, cus_valor)VALUES(?,?)";
+            sql = "INSERT INTO tb_car_cus(tcc_nome, tcc_valor)VALUES(?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, custo.getNome());
-                ps.setInt(2, custo.getValor());
+                ps.setFloat(2, custo.getValor());
                 
                 
                 if(ps.executeUpdate() == 1){
@@ -38,38 +38,38 @@ public class CustoDAO {
         db.close();
         return false;
     }
-    public boolean excluir(Custos custo){
+    public boolean excluir(CustosCarros custo){
     if(db.open()){
-         sql = "DELETE FROM tb_custos WHERE cus_id = ? ";
-        try{
-        ps = db.connerction.prepareStatement(sql);
-        ps.setInt(1, custo.getId());
-        if(ps.executeUpdate() == 1){
-            ps.close();
-            db.close();
-        return true;
-        }
-         
-        }catch(SQLException erro){
-        System.out.println("ERROR: " + erro.toString());
-        return false;
-        }
-        
-        }
-    db.close();
-    return false;
-    
-    
-    }
-    
-    public boolean editar(Custos custo){
-    if(db.open()){
-         sql = "UPDATE tb_custos SET cus_nome = ?, cus_valor = ? WHERE cus_id = ?";
+         sql = "DELETE FROM tb_car_cus WHERE tcc_nome = ? ";
         try{
         ps = db.connerction.prepareStatement(sql);
         ps.setString(1, custo.getNome());
-        ps.setInt(2,custo.getValor());        
-        ps.setInt(4, custo.getId());
+        if(ps.executeUpdate() == 1){
+            ps.close();
+            db.close();
+        return true;
+        }
+         
+        }catch(SQLException erro){
+        System.out.println("ERROR: " + erro.toString());
+        return false;
+        }
+        
+        }
+    db.close();
+    return false;
+    
+    
+    }
+    
+    public boolean editar(CustosCarros custo){
+    if(db.open()){
+         sql = "UPDATE tb_car_cus SET tcc_nome = ?, tcc_valor = ? WHERE tcc_car_id = ?";
+        try{
+        ps = db.connerction.prepareStatement(sql);
+        ps.setString(1, custo.getNome());
+        ps.setFloat(2,custo.getValor());        
+        ps.setInt(4, custo.getCarro().getId());
         if(ps.executeUpdate() == 1){
             ps.close();
             db.close();
@@ -88,19 +88,19 @@ public class CustoDAO {
     }
     
     
-    public List<Custos> selectAll(){
+    public List<CustosCarros> selectAll(){
         if(db.open()){            
-            List<Custos> custos = new ArrayList();
-            sql ="SELECT * FROM tb_custos";
+            List<CustosCarros> custos = new ArrayList();
+            sql ="SELECT * FROM tb_car_cus";
             try{
+                CarrosDAO dao = new CarrosDAO();
                 ps = db.connerction.prepareStatement(sql);
                 rs = ps.executeQuery();
                 while(rs.next()){
-                Custos custo = new Custos();
-                custo.setId(rs.getInt(1));
-                custo.setNome(rs.getString(2));
-                custo.setValor(rs.getInt(4));
-                custo.setValor_final(rs.getInt(3));
+                CustosCarros custo = new CustosCarros();
+                custo.setCarro(dao.select(rs.getInt(1)));
+                custo.setNome(rs.getString(3));
+                custo.setValor(rs.getInt(4));                
                 custos.add(custo);
                 }
                 rs.close();
@@ -114,20 +114,20 @@ public class CustoDAO {
         db.close();               
         return null;
     }
-    public List<Custos> selectFilter(String filter){
+    public List<CustosCarros> selectFilter(String filter){
      if(db.open()){            
-            List<Custos> custos = new ArrayList();
+            List<CustosCarros> custos = new ArrayList();
             String filtro = "%" + filter + "%";
-            sql ="SELECT * FROM tb_custos WHERE cus_nome LIKE ? OR cus_valor LIKE ?";            
+            sql ="SELECT * FROM tb_car_cus WHERE tcc_nome LIKE ? OR tcc_valor LIKE ?";            
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, filtro);
                 ps.setString(2, filtro);
                 rs = ps.executeQuery();
                 while(rs.next()){
-                Custos custo = new Custos();
-                custo.setId(rs.getInt(1));
-                custo.setNome(rs.getString(2));
+                CustosCarros custo = new CustosCarros();
+                
+                custo.setNome(rs.getString(3));
                 custo.setValor(rs.getInt(4));
                 custos.add(custo);
                 }
@@ -143,19 +143,20 @@ public class CustoDAO {
         return null;        
     }
 
-    public Custos select(int id){
+    public CustosCarros select(int id){
         if(db.open()){
-            Custos custo = new Custos();
-            sql ="SELECT * FROM tb_custos WHERE cus_id";
+            CustosCarros custo = new CustosCarros();
+            sql ="SELECT * FROM tb_car_cus WHERE tcc_car_id";
             try{
+                CarrosDAO dao = new CarrosDAO();
                 ps = db.connerction.prepareStatement(sql);
                 ps.setInt(1, id);
                 rs = ps.executeQuery();
                 if(rs.next()){
-                custo.setId(rs.getInt(1));
-                custo.setNome(rs.getString(2));
+                custo.setCarro(dao.select(rs.getInt(1)));
+                custo.setNome(rs.getString(3));
                 custo.setValor(rs.getInt(4));
-                custo.setValor_final(rs.getInt(3));
+                
                 rs.close();
                 ps.close();
                 db.close();

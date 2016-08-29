@@ -96,7 +96,7 @@ public class Carros {
 
     @Override
     public String toString() {
-        return "Carros{" + "id=" + id + ", renavam=" + renavam + ", ano_fabricacao=" + ano_fabricacao + ", ano_modelo=" + ano_modelo + ", chassi=" + chassi + ", obeservacoes=" + obeservacoes + ", cor=" + cor.toString() + ", modelo=" + modelo + ", motorizacao=" + motorizacao + ", placa=" + placa + '}';
+        return "Carros{" + "id=" + id + ", renavam=" + renavam + ", ano_fabricacao=" + ano_fabricacao + ", ano_modelo=" + ano_modelo + ", chassi=" + chassi + ", obeservacoes=" + obeservacoes + ", cor=" + cor + ", modelo=" + modelo + ", motorizacao=" + motorizacao + ", placa=" + placa + '}';
     }
 
   
