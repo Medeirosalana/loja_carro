@@ -2,25 +2,16 @@ package model;
 
 public class CustosCarros {
 
-    private Carros carro;
+    private int id;
     private String nome;
     private float valor;
-    private Custos custo;
 
-    public Custos getCusto() {
-        return custo;
+    public int getId() {
+        return id;
     }
 
-    public void setCusto(Custos custo) {
-        this.custo = custo;
-    }
-
-    public Carros getCarro() {
-        return carro;
-    }
-
-    public void setCarro(Carros carro) {
-        this.carro = carro;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -41,8 +32,9 @@ public class CustosCarros {
 
     @Override
     public String toString() {
-        return "CustosCarros{" + "carro=" + carro + ", nome=" + nome + ", valor=" + valor + ", custo=" + custo + '}';
+        return "CustosCarros{" + "id=" + id + ", nome=" + nome + ", valor=" + valor + '}';
     }
+   
     
    
 

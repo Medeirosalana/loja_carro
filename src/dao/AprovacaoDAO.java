@@ -21,7 +21,7 @@ public class AprovacaoDAO {
     public Aprovacao select(int id){
         if(db.open()){
             Aprovacao apr = new Aprovacao();
-            sql ="SELECT * FROM tb_aprovacao WHERE apr_id";
+            sql ="SELECT * FROM tb_aprovacao WHERE apr_id = ?";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setInt(1, id);

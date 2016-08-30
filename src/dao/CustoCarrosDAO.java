@@ -19,7 +19,7 @@ public class CustoCarrosDAO {
     }
     public boolean inset(CustosCarros custo){
          if(db.open()){
-            sql = "INSERT INTO tb_car_cus(tcc_nome, tcc_valor)VALUES(?,?)";
+            sql = "INSERT INTO tb_valor_custo(vcc_nome, vcc_valor)VALUES(?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, custo.getNome());
@@ -40,7 +40,7 @@ public class CustoCarrosDAO {
     }
     public boolean excluir(CustosCarros custo){
     if(db.open()){
-         sql = "DELETE FROM tb_car_cus WHERE tcc_nome = ? ";
+         sql = "DELETE FROM tb_valor_custo WHERE vcc_nome = ? ";
         try{
         ps = db.connerction.prepareStatement(sql);
         ps.setString(1, custo.getNome());
@@ -64,12 +64,12 @@ public class CustoCarrosDAO {
     
     public boolean editar(CustosCarros custo){
     if(db.open()){
-         sql = "UPDATE tb_car_cus SET tcc_nome = ?, tcc_valor = ? WHERE tcc_car_id = ?";
+         sql = "UPDATE tb_valor_custo SET vcc_nome = ?, vcc_valor = ? WHERE vcc_id = ?";
         try{
         ps = db.connerction.prepareStatement(sql);
         ps.setString(1, custo.getNome());
         ps.setFloat(2,custo.getValor());        
-        ps.setInt(4, custo.getCarro().getId());
+        ps.setInt(3, custo.getId());
         if(ps.executeUpdate() == 1){
             ps.close();
             db.close();
@@ -98,9 +98,9 @@ public class CustoCarrosDAO {
                 rs = ps.executeQuery();
                 while(rs.next()){
                 CustosCarros custo = new CustosCarros();
-                custo.setCarro(dao.select(rs.getInt(1)));
-                custo.setNome(rs.getString(3));
-                custo.setValor(rs.getInt(4));                
+                custo.setId(rs.getInt(1));
+                custo.setNome(rs.getString(2));
+                custo.setValor(rs.getInt(3));                
                 custos.add(custo);
                 }
                 rs.close();
@@ -118,7 +118,7 @@ public class CustoCarrosDAO {
      if(db.open()){            
             List<CustosCarros> custos = new ArrayList();
             String filtro = "%" + filter + "%";
-            sql ="SELECT * FROM tb_car_cus WHERE tcc_nome LIKE ? OR tcc_valor LIKE ?";            
+            sql ="SELECT * FROM tb_valor_custo WHERE vcc_nome LIKE ? OR vcc_valor LIKE ?";            
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setString(1, filtro);
@@ -127,8 +127,8 @@ public class CustoCarrosDAO {
                 while(rs.next()){
                 CustosCarros custo = new CustosCarros();
                 
-                custo.setNome(rs.getString(3));
-                custo.setValor(rs.getInt(4));
+                custo.setNome(rs.getString(2));
+                custo.setValor(rs.getInt(3));
                 custos.add(custo);
                 }
                 rs.close();
@@ -146,16 +146,16 @@ public class CustoCarrosDAO {
     public CustosCarros select(int id){
         if(db.open()){
             CustosCarros custo = new CustosCarros();
-            sql ="SELECT * FROM tb_car_cus WHERE tcc_car_id";
+            sql ="SELECT * FROM tb_valor_custo WHERE vcc_id";
             try{
                 CarrosDAO dao = new CarrosDAO();
                 ps = db.connerction.prepareStatement(sql);
                 ps.setInt(1, id);
                 rs = ps.executeQuery();
                 if(rs.next()){
-                custo.setCarro(dao.select(rs.getInt(1)));
-                custo.setNome(rs.getString(3));
-                custo.setValor(rs.getInt(4));
+                custo.setId(rs.getInt(1));
+                custo.setNome(rs.getString(2));
+                custo.setValor(rs.getInt(3));
                 
                 rs.close();
                 ps.close();

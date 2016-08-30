@@ -19,7 +19,8 @@ public class CustoCarrosController {
         
         CustosCarros custo = new CustosCarros();
         custo.setNome(nome.toUpperCase());
-        custo.setValor(valor);        
+        custo.setValor(valor);  
+         System.out.println(custo.toString());
         return dao.inset(custo);
     }
      public boolean remover(String nome){
@@ -34,10 +35,10 @@ public class CustoCarrosController {
             return dao.selectFilter(filter);
         }        
     }
-       public boolean atualizar(Carros id, String nome, float valor){
+       public boolean atualizar(int id, String nome, float valor){
         CustosCarros custo = new CustosCarros();  
        
-        custo.setCarro(id);
+        custo.setId(id);
         custo.setNome(nome.toUpperCase());
         custo.setValor(valor);        
         return dao.editar(custo);

@@ -15,7 +15,7 @@ public class ClienteController {
     public ClienteController() {
         dao = new ClienteDAO();
     }
-     public boolean adicionar(String nome, String cpf, String agencia, String conta, String aprovacao){
+     public boolean adicionar(String nome, String cpf, String agencia, String conta, Aprovacao aprovacao){
         AprovacaoDAO apr = new AprovacaoDAO();
         Aprovacao ap = new Aprovacao();
         Clientes cli = new Clientes();
@@ -23,7 +23,8 @@ public class ClienteController {
         cli.setCpf(cpf);
         cli.setAgencia(agencia);
         cli.setConta(conta);
-        cli.setAprovacao(ap);
+        cli.setAprovacao(aprovacao);
+         System.out.println(cli.toString());
         return dao.inset(cli);
     }
      public boolean remover(int id){
@@ -38,7 +39,7 @@ public class ClienteController {
             return dao.selectFilter(filter);
         }        
     }
-       public boolean atualizar(int id, String nome, String agencia, String conta, String aprovacao){
+       public boolean atualizar(int id, String nome, String agencia, String conta, Aprovacao aprovacao){
         Clientes cli = new Clientes();
         AprovacaoDAO daos = new AprovacaoDAO();
         Aprovacao apr = new Aprovacao();
@@ -46,7 +47,7 @@ public class ClienteController {
         cli.setNome(nome.toUpperCase());
         cli.setAgencia(agencia);
         cli.setConta(conta);
-        cli.setAprovacao(apr);
+        cli.setAprovacao(aprovacao);
         return dao.update(cli);
     }
 }

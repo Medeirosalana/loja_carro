@@ -56,5 +56,11 @@ public class Clientes {
     public void setAprovacao(Aprovacao aprovacao) {
         this.aprovacao = aprovacao;
     }
+
+    @Override
+    public String toString() {
+        return "Clientes{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", agencia=" + agencia + ", conta=" + conta + ", aprovacao=" + aprovacao + '}';
+    }
+    
     
 }

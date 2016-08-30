@@ -20,6 +20,11 @@ public class Aprovacao {
     public void setAprovacao(String aprovacao) {
         this.aprovacao = aprovacao;
     }
+
+    @Override
+    public String toString() {
+        return "Aprovacao{" + "id=" + id + ", aprovacao=" + aprovacao + '}';
+    }
     
     
 }

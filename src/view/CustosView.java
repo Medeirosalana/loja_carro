@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.CarrosController;
 import controller.CustoCarrosController;
 import dao.CarrosDAO;
 import javax.swing.JOptionPane;
@@ -24,13 +25,14 @@ public class CustosView extends javax.swing.JFrame {
      */
     public CustosView() {
         initComponents();
+        loadtable();
     }
     
     public CustosView(DefaultTableModel model, Carros carro){
     this.model = model;
     this.carros = carro;
     initComponents();
-     
+     loadtable();
     
     
     
@@ -54,7 +56,7 @@ public class CustosView extends javax.swing.JFrame {
         lbtotal = new javax.swing.JLabel();
         tftcusto = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<String>();
+        jList1 = new javax.swing.JList<>();
         lvvalort = new javax.swing.JLabel();
         tfvalort = new javax.swing.JTextField();
         lblucro = new javax.swing.JLabel();
@@ -70,7 +72,7 @@ public class CustosView extends javax.swing.JFrame {
 
         lbvalor.setText("Valor");
 
-        formvalor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.###"))));
+        formvalor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
 
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,10 +97,10 @@ public class CustosView extends javax.swing.JFrame {
 
         tftcusto.setEditable(false);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", " " };
             public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList1);
@@ -229,15 +231,18 @@ public class CustosView extends javax.swing.JFrame {
         Carros c = new Carros();
         CarrosDAO dao = new CarrosDAO();
         
-        c = dao.selectPlaca(carros.getPlaca());
+        
                 
-                c = cc.getCarro();
+                
+              
+                
         if(tfnome.getText().equals("")|| formvalor.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Preencha os campos");
             
             CustoCarrosController control = new CustoCarrosController();
             if(cc == null){
                 if(control.adicionar(tfnome.getText(), Float.parseFloat(formvalor.getText()))){
+                    loadtable();
                     JOptionPane.showMessageDialog(null, "Custo adicionado");
                 } else {
                     JOptionPane.showMessageDialog(null, "Falha ao adicionar");
@@ -245,13 +250,8 @@ public class CustosView extends javax.swing.JFrame {
                 }
             
             }else{ 
-                if(control.atualizar(c= cc.getCarro(), tfnome.getText(), Float.parseFloat(formvalor.getText()))){
                 
-                
-                }
-            
             }
-            System.out.println(c = cc.getCarro());
         
         }
     }//GEN-LAST:event_btatualizarActionPerformed
@@ -278,6 +278,14 @@ public class CustosView extends javax.swing.JFrame {
     private javax.swing.JTextField tftcusto;
     private javax.swing.JTextField tfvalort;
     // End of variables declaration//GEN-END:variables
-
+public  void loadtable(){
+        DefaultTableModel model = (DefaultTableModel) this.Table.getModel();
+        model.setRowCount(0);
+        for(CustosCarros carro: new CustoCarrosController().listar(null)){
+        model.addRow(new Object[]{ carro.getNome(),carro.getValor()});
+            
+        }
+    
+    }
 
 }

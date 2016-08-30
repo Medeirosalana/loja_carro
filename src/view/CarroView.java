@@ -184,11 +184,9 @@ public class CarroView extends javax.swing.JFrame {
         }else{
         Carros carro = new Carros();   
               
-        carro.setAno_fabricacao((int) jTable1.getValueAt(i[0], 2));
-        carro.setAno_modelo((int) jTable1.getValueAt(i[0], 1));
-         carro.setPlaca((String) jTable1.getValueAt(i[0],3));
-        carro.setModelo((String) jTable1.getValueAt(i[0], 0));
-        carro.setId((int) jTable1.getValueAt(i[0], 4));
+        
+         carro.setPlaca(NovoCarros.clear((String) jTable1.getValueAt(i[0],3)));
+      
        
         int resposta = JOptionPane.showConfirmDialog(null, "Dejesa excluir "+ carro.getModelo()+" ?");
             if (resposta == 0){
@@ -258,7 +256,7 @@ public class CarroView extends javax.swing.JFrame {
             Carros carro = new Carros();
             CustosCarros cus = new CustosCarros();
             carro.setPlaca(NovoCarros.clear((String) jTable1.getValueAt(i[0], 3)));
-            cus.setCarro(carro);
+           
             CustosView view = new CustosView(model, carro);
             view.setVisible(true);
         }

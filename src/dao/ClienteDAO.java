@@ -156,10 +156,10 @@ public class ClienteDAO {
                 AprovacaoDAO apr = new AprovacaoDAO();
                 cli.setId(rs.getInt(1));
                 cli.setNome(rs.getString(2));
-                cli.setCpf(rs.getString(3));
-                cli.setAgencia(rs.getString(4));
-                cli.setConta(rs.getString(5));
-                cli.setAprovacao(apr.select(rs.getInt(6)));                
+                cli.setCpf(rs.getString(6));
+                cli.setAgencia(rs.getString(3));
+                cli.setConta(rs.getString(4));
+                cli.setAprovacao(apr.select(rs.getInt(5)));                
                 clientes.add(cli);
                 }
                 rs.close();
