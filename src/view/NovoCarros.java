@@ -473,7 +473,7 @@ public class NovoCarros extends javax.swing.JFrame {
          }else{
              
                 if(control.atualizar(i.getId(), formrenavam.getText(), Integer.parseInt(tfanofabi.getText()), Integer.parseInt(tfanofabi.getText()),tfchassi.getText(), tfmotorizacao.getText(), taObs.getText(), tfmodelo.getText())){
-                 "LLL-####".replace("-", "");
+                
                     JOptionPane.showMessageDialog(null, "Editado com sucesso");
                 }else{
                 JOptionPane.showMessageDialog(null, "Erro ao Editar");

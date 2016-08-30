@@ -5,17 +5,35 @@
  */
 package view;
 
+import controller.CustoCarrosController;
+import dao.CarrosDAO;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Carros;
+import model.CustosCarros;
+
 /**
  *
  * @author Alana
  */
 public class CustosView extends javax.swing.JFrame {
-
+    DefaultTableModel model;
+    Carros carros;
     /**
      * Creates new form CustosView
      */
     public CustosView() {
         initComponents();
+    }
+    
+    public CustosView(DefaultTableModel model, Carros carro){
+    this.model = model;
+    this.carros = carro;
+    initComponents();
+     
+    
+    
+    
     }
 
     /**
@@ -36,7 +54,7 @@ public class CustosView extends javax.swing.JFrame {
         lbtotal = new javax.swing.JLabel();
         tftcusto = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
         lvvalort = new javax.swing.JLabel();
         tfvalort = new javax.swing.JTextField();
         lblucro = new javax.swing.JLabel();
@@ -46,7 +64,7 @@ public class CustosView extends javax.swing.JFrame {
         btatualizar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lbnome.setText("Nome");
 
@@ -77,10 +95,10 @@ public class CustosView extends javax.swing.JFrame {
 
         tftcusto.setEditable(false);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", " " };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList1);
@@ -94,10 +112,20 @@ public class CustosView extends javax.swing.JFrame {
         tflucro.setEditable(false);
 
         btsalvar.setText("Salvar");
+        btsalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btsalvarActionPerformed(evt);
+            }
+        });
 
         btCancelar.setText("Cancelar");
 
         btatualizar.setText("Atualizar");
+        btatualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btatualizarActionPerformed(evt);
+            }
+        });
 
         btExcluir.setText("Excluir");
 
@@ -186,7 +214,47 @@ public class CustosView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsalvarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btsalvarActionPerformed
+
+    private void btatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btatualizarActionPerformed
+        // TODO add your handling code here:
+        CustosCarros cc = new CustosCarros();
+         
+        Carros c = new Carros();
+        CarrosDAO dao = new CarrosDAO();
+        
+        c = dao.selectPlaca(carros.getPlaca());
+                
+                c = cc.getCarro();
+        if(tfnome.getText().equals("")|| formvalor.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Preencha os campos");
+            
+            CustoCarrosController control = new CustoCarrosController();
+            if(cc == null){
+                if(control.adicionar(tfnome.getText(), Float.parseFloat(formvalor.getText()))){
+                    JOptionPane.showMessageDialog(null, "Custo adicionado");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falha ao adicionar");
+                        
+                }
+            
+            }else{ 
+                if(control.atualizar(c= cc.getCarro(), tfnome.getText(), Float.parseFloat(formvalor.getText()))){
+                
+                
+                }
+            
+            }
+            System.out.println(c = cc.getCarro());
+        
+        }
+    }//GEN-LAST:event_btatualizarActionPerformed
 
    
 

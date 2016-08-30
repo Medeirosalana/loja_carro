@@ -15,7 +15,7 @@ public class CustoCarrosController {
     public CustoCarrosController() {
         dao = new CustoCarrosDAO();
     }
-     public boolean adicionar(String nome, int valor){
+     public boolean adicionar(String nome, float valor){
         
         CustosCarros custo = new CustosCarros();
         custo.setNome(nome.toUpperCase());

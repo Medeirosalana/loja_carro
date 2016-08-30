@@ -39,6 +39,11 @@ public class CustosCarros {
         this.valor = valor;
     }
 
+    @Override
+    public String toString() {
+        return "CustosCarros{" + "carro=" + carro + ", nome=" + nome + ", valor=" + valor + ", custo=" + custo + '}';
+    }
+    
    
 
     

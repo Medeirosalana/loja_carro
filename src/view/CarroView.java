@@ -259,7 +259,8 @@ public class CarroView extends javax.swing.JFrame {
             CustosCarros cus = new CustosCarros();
             carro.setPlaca(NovoCarros.clear((String) jTable1.getValueAt(i[0], 3)));
             cus.setCarro(carro);
-            
+            CustosView view = new CustosView(model, carro);
+            view.setVisible(true);
         }
     }//GEN-LAST:event_btCustosActionPerformed
 

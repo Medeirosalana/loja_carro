@@ -38,7 +38,7 @@ public class novoscarros extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
         lbAnomodelo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taObs = new javax.swing.JTextArea();
@@ -62,6 +62,7 @@ public class novoscarros extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setEnabled(false);
         jPanel1.setName("Dados"); // NOI18N
 
         lbAnomodelo.setText("Ano Modelo");
@@ -249,6 +250,7 @@ public class novoscarros extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfmodeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfmodeloActionPerformed
@@ -307,7 +309,6 @@ public class novoscarros extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField formplaca;
     private javax.swing.JFormattedTextField formrenavam;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbAnofabricacao;
     private javax.swing.JLabel lbAnomodelo;
