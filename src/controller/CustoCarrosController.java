@@ -6,7 +6,9 @@ import dao.CustoCarrosDAO;
 import java.util.List;
 import model.Carros;
 import model.CartasDeCreditos;
+import model.Custos;
 import model.CustosCarros;
+import model.valorCustos;
 
 public class CustoCarrosController {
 
@@ -42,5 +44,17 @@ public class CustoCarrosController {
         custo.setNome(nome.toUpperCase());
         custo.setValor(valor);        
         return dao.editar(custo);
+    }
+       public boolean adicionar(Custos custos, CustosCarros id){
+        
+        valorCustos custo = new valorCustos();
+        custo.setCusto(custos);
+        custo.setValor(id);         
+        return dao.inset(custo);
+    }
+        public boolean remover(CustosCarros carros){
+        valorCustos custo = new valorCustos();
+        custo.setValor(carros);
+        return dao.excluir(custo);
     }
 }

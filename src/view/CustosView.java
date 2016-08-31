@@ -11,7 +11,9 @@ import dao.CarrosDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Carros;
+import model.Custos;
 import model.CustosCarros;
+import model.valorCustos;
 
 /**
  *
@@ -56,7 +58,7 @@ public class CustosView extends javax.swing.JFrame {
         lbtotal = new javax.swing.JLabel();
         tftcusto = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
         lvvalort = new javax.swing.JLabel();
         tfvalort = new javax.swing.JTextField();
         lblucro = new javax.swing.JLabel();
@@ -96,11 +98,16 @@ public class CustosView extends javax.swing.JFrame {
         lbtotal.setText("Total Custos");
 
         tftcusto.setEditable(false);
+        tftcusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tftcustoActionPerformed(evt);
+            }
+        });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", " " };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList1);
@@ -221,7 +228,13 @@ public class CustosView extends javax.swing.JFrame {
 
     private void btsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsalvarActionPerformed
         // TODO add your handling code here:
+       Custos cus = new Custos();
+       valorCustos custo = new valorCustos();
+       CustoCarrosController control = new CustoCarrosController();
+        for(CustosCarros custos : new CustoCarrosController().listar(null)){
+        model.getColumnClass(0);
         
+        }
     }//GEN-LAST:event_btsalvarActionPerformed
 
     private void btatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btatualizarActionPerformed
@@ -242,7 +255,7 @@ public class CustosView extends javax.swing.JFrame {
             CustoCarrosController control = new CustoCarrosController();
             if(cc == null){
                 if(control.adicionar(tfnome.getText(), Float.parseFloat(formvalor.getText()))){
-                    loadtable();
+                    loadtable();                        
                     JOptionPane.showMessageDialog(null, "Custo adicionado");
                 } else {
                     JOptionPane.showMessageDialog(null, "Falha ao adicionar");
@@ -250,11 +263,19 @@ public class CustosView extends javax.swing.JFrame {
                 }
             
             }else{ 
+                if(control.atualizar(cc.getId(), tfnome.getText(), Float.parseFloat(formvalor.getText()))){
+                JOptionPane.showMessageDialog(null, "Editado com sucesso");
+                
+                }
                 
             }
         
         }
     }//GEN-LAST:event_btatualizarActionPerformed
+
+    private void tftcustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tftcustoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tftcustoActionPerformed
 
    
 

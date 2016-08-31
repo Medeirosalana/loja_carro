@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.CustosCarros;
+import model.valorCustos;
 
 public class CustoCarrosDAO {
 
@@ -91,7 +92,7 @@ public class CustoCarrosDAO {
     public List<CustosCarros> selectAll(){
         if(db.open()){            
             List<CustosCarros> custos = new ArrayList();
-            sql ="SELECT * FROM tb_car_cus";
+            sql ="SELECT * FROM tb_valor_custo";
             try{
                 CarrosDAO dao = new CarrosDAO();
                 ps = db.connerction.prepareStatement(sql);
@@ -168,6 +169,50 @@ public class CustoCarrosDAO {
         }
         db.close();
         return null;
+    }
+    public boolean inset(valorCustos custo){
+         if(db.open()){
+            sql = "INSERT INTO tb_custos_carros(cdc_cus_id, cdc_vcc_id)VALUES(?,?)";
+            try{
+                ps = db.connerction.prepareStatement(sql);
+                ps.setInt(1, custo.getCusto().getId());
+                ps.setInt(2, custo.getValor().getId());
+                
+                
+                if(ps.executeUpdate() == 1){
+                    ps.close();
+                    db.close();
+                    return true;
+                }
+            }catch(SQLException error){
+                System.out.println("ERROR: " + error.toString());
+            }
+        }       
+        db.close();
+        return false;
+    }
+     public boolean excluir(valorCustos custo){
+    if(db.open()){
+         sql = "DELETE FROM tb_custos_carros WHERE cdc_vcc_id = ? ";
+        try{
+        ps = db.connerction.prepareStatement(sql);
+        ps.setInt(1, custo.getValor().getId());
+        if(ps.executeUpdate() == 1){
+            ps.close();
+            db.close();
+        return true;
+        }
+         
+        }catch(SQLException erro){
+        System.out.println("ERROR: " + erro.toString());
+        return false;
+        }
+        
+        }
+    db.close();
+    return false;
+    
+    
     }
     
     }
