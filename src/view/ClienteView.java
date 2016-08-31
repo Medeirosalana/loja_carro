@@ -5,9 +5,13 @@
  */
 package view;
 
+import controller.CarrosController;
 import controller.ClienteController;
+import javax.persistence.spi.PersistenceUnitTransactionType;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Aprovacao;
+import model.Carros;
 import model.Clientes;
 
 /**
@@ -47,9 +51,17 @@ public class ClienteView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Agencia", "Conta", "Aprovação", "Cpf"
+                "ID", "Nome", "Agencia", "Conta", "Aprovação", "Cpf"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnovo.setText("Novo");
@@ -67,6 +79,11 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         btexcluir.setText("Excluir");
+        btexcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btexcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,18 +96,15 @@ public class ClienteView extends javax.swing.JFrame {
                 .addComponent(bteditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btexcluir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(404, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btexcluir)
                     .addComponent(bteditar)
@@ -117,12 +131,42 @@ public class ClienteView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione apenas um contato");
         }else{
             Clientes cliente = new Clientes();
-            
+            cliente.setAgencia((String) jTable1.getValueAt(i[0], 2));
+//            cliente.setAprovacao((Aprovacao) jTable1.getValueAt(i[0], 4));
+            cliente.setConta((String) jTable1.getValueAt(i[0], 3));
+            cliente.setCpf(NovoCliente.format((String) jTable1.getValueAt(i[0], 5)));
+            cliente.setId((int) jTable1.getValueAt(i[0], 0));
+            cliente.setNome((String) jTable1.getValueAt(i[0], 1));
         NovoCliente cli = new NovoCliente(model, cliente);
-        
+        cli.setVisible(true);
         
         }
     }//GEN-LAST:event_bteditarActionPerformed
+
+    private void btexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btexcluirActionPerformed
+        // TODO add your handling code here:
+        int i [] = jTable1.getSelectedRows();
+        if(i.length == 0){
+            JOptionPane.showMessageDialog(null, "Selecione um cliente");
+        }else if (i.length > 1){
+            JOptionPane.showMessageDialog(null, "Selecione apenas um cliente");
+        }else{
+        Clientes cliente = new Clientes();
+              
+        
+         cliente.setId((int) jTable1.getValueAt(i[0], 0));
+         cliente.setNome((String) jTable1.getValueAt(i[0], 1));
+       
+        int resposta = JOptionPane.showConfirmDialog(null, "Dejesa excluir "+ cliente.getNome()+" ?");
+            if (resposta == 0){
+                if(new ClienteController().remover(cliente.getId())){
+                JOptionPane.showMessageDialog(null, "cliente excluido com sucesso!");
+                loadtable();}
+        }else{
+            JOptionPane.showMessageDialog(null, "Falha ao tentar excluir");
+            }
+        }
+    }//GEN-LAST:event_btexcluirActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -136,7 +180,7 @@ public  void loadtable(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         for(Clientes cliente: new ClienteController().listar(null)){
-        model.addRow(new Object[]{cliente.getNome(), cliente.getAgencia(), cliente.getConta(), cliente.getAprovacao().getAprovacao(),NovoCliente.format(cliente.getCpf())});
+        model.addRow(new Object[]{cliente.getId(),cliente.getNome(), cliente.getAgencia(), cliente.getConta(), cliente.getAprovacao().getAprovacao(),NovoCliente.format(cliente.getCpf())});
             
         }
     

@@ -98,7 +98,7 @@ public class CarrosDAO {
                 rs = ps.executeQuery();
                 while(rs.next()){
                 Carros carro = new Carros();
-                CustoCarrosDAO daos = new CustoCarrosDAO();
+                
                 CorDAO dao = new CorDAO();
                 carro.setId(rs.getInt(1));
                 carro.setRenavam(rs.getString(2));
@@ -137,7 +137,7 @@ public class CarrosDAO {
                 rs = ps.executeQuery();
                 while(rs.next()){
                 Carros carro = new Carros();
-                CustoCarrosDAO daos = new CustoCarrosDAO();
+             
                 CorDAO dao = new CorDAO();
                 
                 carro.setRenavam(rs.getString(1));

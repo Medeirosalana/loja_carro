@@ -29,7 +29,10 @@ public class NovoCliente extends javax.swing.JFrame {
         this.model = model;
         this.cliente = cliente;
         initComponents();
-    
+        tfnome.setText(cliente.getNome());
+        tfagencia.setText(cliente.getAgencia());
+        tfconta.setText(cliente.getConta());
+        formcpf.setText(cliente.getCpf());
     }
     
 
@@ -65,8 +68,6 @@ public class NovoCliente extends javax.swing.JFrame {
 
         jRadioButton2.setText("jRadioButton2");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         lbnome.setText("Nome");
 
         lbcpf.setText("Cpf");
@@ -92,6 +93,11 @@ public class NovoCliente extends javax.swing.JFrame {
         });
 
         btcancelar.setText("Cancelar");
+        btcancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btcancelarActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Aprovado", "Não aprovado", "Sem consulta" }));
 
@@ -161,6 +167,7 @@ public class NovoCliente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsalvarActionPerformed
@@ -194,6 +201,11 @@ public class NovoCliente extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_btsalvarActionPerformed
+
+    private void btcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btcancelarActionPerformed
+        // TODO add your handling code here:
+        NovoCliente.this.setVisible(false);
+    }//GEN-LAST:event_btcancelarActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

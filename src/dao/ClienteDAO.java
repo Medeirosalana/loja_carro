@@ -85,7 +85,7 @@ public class ClienteDAO {
     public Clientes select(int id){
         if(db.open()){
             Clientes cli = new Clientes();
-            sql ="SELECT * FROM tb_clientes WHERE cli_id";
+            sql ="SELECT * FROM tb_clientes WHERE cli_id = ?";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setInt(1, id);

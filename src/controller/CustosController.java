@@ -1,9 +1,11 @@
 package controller;
 
 import dao.CustosDAO;
+import java.util.List;
 import model.Carros;
+
 import model.Custos;
-import model.CustosCarros;
+
 
 
 public class CustosController {
@@ -13,24 +15,30 @@ public class CustosController {
     public CustosController() {
         dao = new CustosDAO();
     }
-    public boolean adicionar(float valor_final, float lucro, float valor){
+    public boolean adicionar(String descricao, float valor){
         
         Custos custo = new Custos();
-        custo.setValor_final(valor_final);
-        custo.setLucro(lucro);
-        custo.setValor_total(valor);
+        custo.setDescrissao(descricao);
+        custo.setValor(valor);
         return dao.inset(custo);
     }
-    public boolean atualizar(int id, float valor_final, float lucro, float valor){
+    public boolean atualizar(int id, String descricao, float valor){
         Custos custo = new Custos();
-        custo.setValor_final(valor_final);
-        custo.setLucro(lucro);
-        custo.setValor_total(valor);     
+        custo.setId(id);
+        custo.setDescrissao(descricao);
+        custo.setValor(valor);
         return dao.update(custo);
     }
     public boolean remover(int id){
         Custos custo = new Custos();
         custo.setId(id);
         return dao.excluir(custo);
+    }
+    public List<Custos> listar(int filter){
+        
+        
+            return dao.selectFilter(filter);
+        
+        
     }
 }

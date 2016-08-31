@@ -10,7 +10,7 @@ import dao.CarrosDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Carros;
-import model.CustosCarros;
+
 
 
 
@@ -86,11 +86,11 @@ public class CarroView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Modelo", "Ano Modelo", "Ano Fabricação", "Placa"
+                "Modelo", "Ano Modelo", "Ano Fabricação", "Placa", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -254,10 +254,12 @@ public class CarroView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione apenas um contato");
         }else{
             Carros carro = new Carros();
-            CustosCarros cus = new CustosCarros();
-            carro.setPlaca(NovoCarros.clear((String) jTable1.getValueAt(i[0], 3)));
-           
+            CarrosDAO dao = new CarrosDAO();
+            carro.setId((int) jTable1.getValueAt(i[0], 4));
+          
+            System.out.println(carro.toString());
             CustosView view = new CustosView(model, carro);
+           
             view.setVisible(true);
         }
     }//GEN-LAST:event_btCustosActionPerformed
@@ -283,7 +285,7 @@ public class CarroView extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
         model.setRowCount(0);
         for(Carros carro: new CarrosController().listar(null)){
-        model.addRow(new Object[]{ carro.getModelo(),carro.getAno_modelo(), carro.getAno_fabricacao(),CarroView.format(carro.getPlaca())});
+        model.addRow(new Object[]{ carro.getModelo(),carro.getAno_modelo(), carro.getAno_fabricacao(),CarroView.format(carro.getPlaca()), carro.getId()});
             
         }
     

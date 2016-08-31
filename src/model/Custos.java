@@ -3,9 +3,17 @@ package model;
 public class Custos {
 
     private int id;
-    private float valor_final;
-    private float valor_total;
-    private float lucro;
+    private float valor;
+    private String descrissao;
+    private Carros carro;
+
+    public Carros getCarro() {
+        return carro;
+    }
+
+    public void setCarro(Carros carro) {
+        this.carro = carro;
+    }
 
     public int getId() {
         return id;
@@ -15,28 +23,22 @@ public class Custos {
         this.id = id;
     }
 
-    public float getValor_final() {
-        return valor_final;
+    public float getValor() {
+        return valor;
     }
 
-    public void setValor_final(float valor_final) {
-        this.valor_final = valor_final;
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
-    public float getValor_total() {
-        return valor_total;
+    public String getDescrissao() {
+        return descrissao;
     }
 
-    public void setValor_total(float valor_total) {
-        this.valor_total = valor_total;
+    public void setDescrissao(String descrissao) {
+        this.descrissao = descrissao;
     }
+  
 
-    public float getLucro() {
-        return lucro;
-    }
-
-    public void setLucro(float lucro) {
-        this.lucro = lucro;
-    }
     
 }

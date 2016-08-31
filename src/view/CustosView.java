@@ -6,14 +6,15 @@
 package view;
 
 import controller.CarrosController;
-import controller.CustoCarrosController;
+import controller.CustosController;
+
 import dao.CarrosDAO;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Carros;
 import model.Custos;
-import model.CustosCarros;
-import model.valorCustos;
+
 
 /**
  *
@@ -22,6 +23,7 @@ import model.valorCustos;
 public class CustosView extends javax.swing.JFrame {
     DefaultTableModel model;
     Carros carros;
+    Custos cus ;
     /**
      * Creates new form CustosView
      */
@@ -35,8 +37,7 @@ public class CustosView extends javax.swing.JFrame {
     this.carros = carro;
     initComponents();
      loadtable();
-    
-    
+    calcularTotal();
     
     }
 
@@ -52,21 +53,21 @@ public class CustosView extends javax.swing.JFrame {
         lbnome = new javax.swing.JLabel();
         tfnome = new javax.swing.JTextField();
         lbvalor = new javax.swing.JLabel();
-        formvalor = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
         lbtotal = new javax.swing.JLabel();
         tftcusto = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<String>();
+        jList1 = new javax.swing.JList<>();
         lvvalort = new javax.swing.JLabel();
         tfvalort = new javax.swing.JTextField();
         lblucro = new javax.swing.JLabel();
         tflucro = new javax.swing.JTextField();
         btsalvar = new javax.swing.JButton();
         btCancelar = new javax.swing.JButton();
-        btatualizar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setResizable(false);
 
@@ -74,24 +75,30 @@ public class CustosView extends javax.swing.JFrame {
 
         lbvalor.setText("Valor");
 
-        formvalor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Valor"
+                "ID", "Nome", "Valor"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Float.class
             };
+            boolean[] canEdit = new boolean [] {
+                true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        Table.setEditingRow(0);
         Table.setEnabled(false);
         jScrollPane1.setViewportView(Table);
 
@@ -104,10 +111,10 @@ public class CustosView extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", " " };
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%" };
             public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList1);
@@ -129,14 +136,16 @@ public class CustosView extends javax.swing.JFrame {
 
         btCancelar.setText("Cancelar");
 
-        btatualizar.setText("Atualizar");
-        btatualizar.addActionListener(new java.awt.event.ActionListener() {
+        btExcluir.setText("Excluir");
+
+        jButton1.setText("Calcular");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btatualizarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        btExcluir.setText("Excluir");
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,34 +154,17 @@ public class CustosView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblucro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tflucro, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbtotal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                .addComponent(tftcusto, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lvvalort)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfvalort, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(52, 52, 52)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(222, 222, 222))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbnome)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfnome, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41)
-                                .addComponent(lbvalor)
-                                .addGap(18, 18, 18)
-                                .addComponent(formvalor, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbnome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfnome, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(lbvalor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -180,11 +172,33 @@ public class CustosView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btCancelar)
                         .addGap(61, 61, 61))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btatualizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btExcluir)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblucro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tflucro, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 5, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lbtotal)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tftcusto, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lvvalort)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfvalort, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(148, 148, 148)
+                                .addComponent(btExcluir))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)))
+                        .addGap(97, 97, 97))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,29 +208,33 @@ public class CustosView extends javax.swing.JFrame {
                     .addComponent(lbnome)
                     .addComponent(tfnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbvalor)
-                    .addComponent(formvalor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btatualizar)
-                    .addComponent(btExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(btExcluir)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tftcusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbtotal))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tfvalort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lvvalort))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tflucro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblucro)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbtotal)
+                                    .addComponent(tftcusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tfvalort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lvvalort))
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tflucro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblucro)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 6, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btsalvar)
                     .addComponent(btCancelar)))
@@ -228,54 +246,119 @@ public class CustosView extends javax.swing.JFrame {
 
     private void btsalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btsalvarActionPerformed
         // TODO add your handling code here:
-       Custos cus = new Custos();
-       valorCustos custo = new valorCustos();
-       CustoCarrosController control = new CustoCarrosController();
-        for(CustosCarros custos : new CustoCarrosController().listar(null)){
-        model.getColumnClass(0);
-        
-        }
-    }//GEN-LAST:event_btsalvarActionPerformed
-
-    private void btatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btatualizarActionPerformed
-        // TODO add your handling code here:
-        CustosCarros cc = new CustosCarros();
-         
-        Carros c = new Carros();
-        CarrosDAO dao = new CarrosDAO();
+        Custos cus = new Custos();
+        CustosController control = new CustosController();
+       if(tfnome.getText().equals("")|| jFormattedTextField1.getText().equals("")){JOptionPane.showMessageDialog(null, "Preencha todos os campos");}
+        if(cus == null){
+            if(control.adicionar(tfnome.getText(), Float.parseFloat(jFormattedTextField1.getText()))){
+            loadtable();
+            limpar();
+            }else{JOptionPane.showMessageDialog(null, "Erro ao adicionar");}
         
         
+        }else{
+            if(control.atualizar(cus.getId(), tfnome.getText(), Float.parseFloat(jFormattedTextField1.getText()))){
                 
-                
-              
-                
-        if(tfnome.getText().equals("")|| formvalor.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Preencha os campos");
-            
-            CustoCarrosController control = new CustoCarrosController();
-            if(cc == null){
-                if(control.adicionar(tfnome.getText(), Float.parseFloat(formvalor.getText()))){
-                    loadtable();                        
-                    JOptionPane.showMessageDialog(null, "Custo adicionado");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Falha ao adicionar");
-                        
-                }
-            
-            }else{ 
-                if(control.atualizar(cc.getId(), tfnome.getText(), Float.parseFloat(formvalor.getText()))){
-                JOptionPane.showMessageDialog(null, "Editado com sucesso");
-                
-                }
-                
+            loadtable();
+            limpar();
+            }else{
+            JOptionPane.showMessageDialog(null, "Erro ao editar");
             }
         
         }
-    }//GEN-LAST:event_btatualizarActionPerformed
+        
+    }//GEN-LAST:event_btsalvarActionPerformed
 
     private void tftcustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tftcustoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tftcustoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(tftcusto.getText().equals("")){
+                tftcusto.requestFocus();
+                return;
+                }
+            
+           try{
+                float valor = Float.parseFloat(tftcusto.getText());
+                float desconto = 0;
+                float valortotal = 0;
+                switch(jList1.getSelectedIndex()){
+                    
+                    case 0:
+                        desconto = 1.05f;
+                        break;
+                    case 1:
+                        desconto = 1.1f;
+                        break;
+                    case 2:
+                        desconto = 1.15f;
+                        break;
+                    case 3:
+                        desconto = 1.20f;
+                        break;
+                    case 4:
+                        desconto = 1.25f;
+                        break;
+                    case 5:
+                        desconto = 1.30f;
+                        break;
+                    case 6: 
+                        desconto = 1.35f;
+                        break;
+                    case 7:
+                        desconto = 1.40f;
+                        break;
+                    case 8: 
+                        desconto = 1.45f;
+                        break;
+                    case 9:
+                        desconto = 1.50f;
+                        break;
+                    case 10:
+                        desconto = 1.55f;
+                        break;
+                    case 11:
+                        desconto = 1.60f;
+                        break;
+                    case 12:
+                        desconto = 1.65f;
+                        break;
+                    case 13: 
+                        desconto = 1.70f;
+                        break;
+                    case 14:
+                        desconto = 1.75f;
+                                break;
+                    case 15:
+                        desconto = 1.8f;
+                        break;
+                    case 16:
+                        desconto = 1.85f;
+                        break;
+                    case 17:
+                        desconto = 1.9f;
+                        break;
+                    case 18:
+                        desconto = 1.95f;
+                        break;
+                    default:
+                         JOptionPane.showMessageDialog(null, "Selecione");
+                        break;
+                }
+                valortotal = valor * desconto;
+                float lucro = valortotal - valor;
+                tfvalort.setText(""+ valortotal);
+                tflucro.setText(""+ lucro);
+                        
+            }catch(NumberFormatException error){
+                JOptionPane.showMessageDialog(null, "Forneça apenas números");
+                error.toString();
+                tftcusto.setText("");
+                tftcusto.requestFocus();
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
    
 
@@ -283,9 +366,9 @@ public class CustosView extends javax.swing.JFrame {
     private javax.swing.JTable Table;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btExcluir;
-    private javax.swing.JButton btatualizar;
     private javax.swing.JButton btsalvar;
-    private javax.swing.JFormattedTextField formvalor;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -300,13 +383,31 @@ public class CustosView extends javax.swing.JFrame {
     private javax.swing.JTextField tfvalort;
     // End of variables declaration//GEN-END:variables
 public  void loadtable(){
+    Custos cus = new Custos();
         DefaultTableModel model = (DefaultTableModel) this.Table.getModel();
         model.setRowCount(0);
-        for(CustosCarros carro: new CustoCarrosController().listar(null)){
-        model.addRow(new Object[]{ carro.getNome(),carro.getValor()});
+        for(Custos custo: new CustosController().listar((carros.getId()))){
+        model.addRow(new Object[]{ custo.getId(),custo.getDescrissao(),custo.getValor()});
             
         }
     
     }
+ private void calcularTotal() {
+               float total = 0;
+               for(int linha = 0; linha<Table.getRowCount(); linha++){
+               String valor = ""+ Table.getValueAt(linha, 2);
+               valor = valor.replace(".", "");
+               valor = valor.replace(",", ".");
+               total += Float.parseFloat(valor);
+               }
+               tftcusto.setText(""+ total);
+            }
+ private void limpar(){
+ tfnome.setText("");
+ jFormattedTextField1.setText("");
+ 
+ }
 
+
+ 
 }
