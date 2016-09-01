@@ -1,0 +1,168 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema db_loja_carros
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `db_loja_carros` DEFAULT CHARACTER SET utf8 ;
+USE `db_loja_carros` ;
+
+-- -----------------------------------------------------
+-- Table `db_loja_carros`.`tb_aprovacao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_aprovacao` (
+  `apr_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `apr_aprovacao` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`apr_id`),
+  UNIQUE INDEX `apr_id_UNIQUE` (`apr_id` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `db_loja_carros`.`tb_cores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_cores` (
+  `cor_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cor_cor` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`cor_id`),
+  UNIQUE INDEX `cor_id_UNIQUE` (`cor_id` ASC))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `db_loja_carros`.`tb_carros`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_carros` (
+  `car_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `car_renavam` VARCHAR(45) NOT NULL,
+  `car_ano_fabricacao` INT(11) NOT NULL,
+  `car_ano_modelo` INT(11) NOT NULL,
+  `car_chassi` VARCHAR(45) NOT NULL,
+  `car_cor_id` INT(11) NULL DEFAULT NULL,
+  `car_placa` CHAR(7) NOT NULL,
+  `car_observacoes` VARCHAR(45) NULL DEFAULT NULL,
+  `car_mototizacao` VARCHAR(45) NOT NULL,
+  `car_modelo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`car_id`),
+  UNIQUE INDEX `car_id_UNIQUE` (`car_id` ASC),
+  UNIQUE INDEX `car_renavam_UNIQUE` (`car_renavam` ASC),
+  UNIQUE INDEX `car_chassi_UNIQUE` (`car_chassi` ASC),
+  UNIQUE INDEX `car_placa_UNIQUE` (`car_placa` ASC),
+  INDEX `car_cor_id` (`car_cor_id` ASC),
+  CONSTRAINT `fk_cor_car`
+    FOREIGN KEY (`car_cor_id`)
+    REFERENCES `db_loja_carros`.`tb_cores` (`cor_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `db_loja_carros`.`tb_cartas_de_creiditos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_cartas_de_creiditos` (
+  `cdc_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cdc_cota` VARCHAR(45) NOT NULL,
+  `cdc_grupo` VARCHAR(45) NOT NULL,
+  `cdc_proposta` DOUBLE NOT NULL,
+  `cdc_prazo` INT(11) NOT NULL,
+  `cdc_parcela` DOUBLE NOT NULL,
+  `cdc_valor_inicial` DOUBLE NOT NULL,
+  `cdc_valor_final` DOUBLE NOT NULL,
+  PRIMARY KEY (`cdc_id`),
+  UNIQUE INDEX `cdc_id_UNIQUE` (`cdc_id` ASC))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `db_loja_carros`.`tb_clientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_clientes` (
+  `cli_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cli_nome` VARCHAR(100) NOT NULL,
+  `cli_cpf` CHAR(11) NOT NULL,
+  `cli_agencia` VARCHAR(5) NOT NULL,
+  `cli_conta` VARCHAR(10) NOT NULL,
+  `cli_apr_id` INT(11) NOT NULL,
+  PRIMARY KEY (`cli_id`),
+  UNIQUE INDEX `cli_id_UNIQUE` (`cli_id` ASC),
+  UNIQUE INDEX `cli_cpf_UNIQUE` (`cli_cpf` ASC),
+  UNIQUE INDEX `cli_conta_UNIQUE` (`cli_conta` ASC),
+  INDEX `cli_apr` (`cli_apr_id` ASC),
+  CONSTRAINT `fk_apr_cli`
+    FOREIGN KEY (`cli_apr_id`)
+    REFERENCES `db_loja_carros`.`tb_aprovacao` (`apr_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `db_loja_carros`.`tb_custos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_custos` (
+  `cus_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `cus_valor` FLOAT NULL DEFAULT NULL,
+  `CUS_descricao` VARCHAR(25) NOT NULL,
+  `cus_car_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`cus_id`),
+  UNIQUE INDEX `cus_id_UNIQUE` (`cus_id` ASC),
+  INDEX `fk_car_cus_idx` (`cus_car_id` ASC),
+  CONSTRAINT `fk_car_cus`
+    FOREIGN KEY (`cus_car_id`)
+    REFERENCES `db_loja_carros`.`tb_carros` (`car_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `db_loja_carros`.`tb_vendas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_vendas` (
+  `ven_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `ven_data_venda` DATE NOT NULL,
+  `ven_car_id` INT(11) NOT NULL,
+  `ven_cli_id` INT(11) NOT NULL,
+  `ven_cdc_id` INT(11) NOT NULL,
+  PRIMARY KEY (`ven_id`),
+  UNIQUE INDEX `ven_id_UNIQUE` (`ven_id` ASC),
+  INDEX `ven_car` (`ven_car_id` ASC),
+  INDEX `ven_cli` (`ven_cli_id` ASC),
+  INDEX `ven_cdc` (`ven_cdc_id` ASC),
+  CONSTRAINT `fk_car_ven`
+    FOREIGN KEY (`ven_car_id`)
+    REFERENCES `db_loja_carros`.`tb_carros` (`car_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cdc_ven`
+    FOREIGN KEY (`ven_cdc_id`)
+    REFERENCES `db_loja_carros`.`tb_cartas_de_creiditos` (`cdc_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cli_ven`
+    FOREIGN KEY (`ven_cli_id`)
+    REFERENCES `db_loja_carros`.`tb_clientes` (`cli_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
