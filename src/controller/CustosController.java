@@ -21,6 +21,7 @@ public class CustosController {
         custo.setDescrissao(descricao);
         custo.setValor(valor);
         custo.setCarro(id);
+        System.out.println(custo.toString());
         return dao.inset(custo);
     }
     public boolean atualizar(int id, String descricao, float valor){
@@ -28,6 +29,7 @@ public class CustosController {
         custo.setId(id);
         custo.setDescrissao(descricao);
         custo.setValor(valor);
+       
         return dao.update(custo);
     }
     public boolean remover(int id){

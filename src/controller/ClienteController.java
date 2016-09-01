@@ -48,6 +48,7 @@ public class ClienteController {
         cli.setAgencia(agencia);
         cli.setConta(conta);
         cli.setAprovacao(aprovacao);
+           System.out.println(cli.toString());
         return dao.update(cli);
     }
 }

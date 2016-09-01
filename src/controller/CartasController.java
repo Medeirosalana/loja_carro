@@ -14,7 +14,7 @@ public class CartasController {
     public CartasController() {
         dao = new CartaDeCreditoDAO();
     }
-     public boolean adicionar(int cota, int grupo, int proposta, int prazo, int parcela, int valor_inicial){
+     public boolean adicionar(String cota, String grupo, float proposta, int prazo, float parcela, float valor_inicial, float valor_final){
         
         CartasDeCreditos carta = new CartasDeCreditos();
         carta.setCota(cota);
@@ -23,6 +23,7 @@ public class CartasController {
         carta.setPrazo(prazo);
         carta.setParcela(parcela);
         carta.setValor_inicial(valor_inicial);
+        carta.setValor_final(valor_final);
         
         
         return dao.inset(carta);
@@ -40,7 +41,7 @@ public class CartasController {
         }
         
     }
-     public boolean atualizar(int id, int cota, int grupo, int proposta, int prazo, int valor_final, int valor_inicial){
+     public boolean atualizar(int id, String cota, String grupo, float proposta, int prazo, float valor_final, float valor_inicial, float parcela){
     CartasDeCreditos carta = new CartasDeCreditos();    
         carta.setId(id);
         carta.setCota(cota);
@@ -48,7 +49,9 @@ public class CartasController {
         carta.setProposta(proposta);
         carta.setPrazo(prazo);
         carta.setValor_final(valor_final);
-        carta.setValor_inicial(valor_inicial);              
+        carta.setValor_inicial(valor_inicial);  
+        carta.setParcela(parcela);
+         System.out.println(carta.toString());
         return dao.update(carta);
     }
     
