@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `db_loja_carros`.`tb_carros` (
   `car_cor_id` INT(11) NULL DEFAULT NULL,
   `car_placa` CHAR(7) NOT NULL,
   `car_observacoes` VARCHAR(45) NULL DEFAULT NULL,
-  `car_mototizacao` VARCHAR(45) NOT NULL,
+  `car_motorizacao` VARCHAR(45) NOT NULL,
   `car_modelo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`car_id`),
   UNIQUE INDEX `car_id_UNIQUE` (`car_id` ASC),
