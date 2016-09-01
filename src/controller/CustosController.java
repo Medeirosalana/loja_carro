@@ -15,11 +15,12 @@ public class CustosController {
     public CustosController() {
         dao = new CustosDAO();
     }
-    public boolean adicionar(String descricao, float valor){
+    public boolean adicionar( float valor,String descricao, Carros id){
         
         Custos custo = new Custos();
         custo.setDescrissao(descricao);
         custo.setValor(valor);
+        custo.setCarro(id);
         return dao.inset(custo);
     }
     public boolean atualizar(int id, String descricao, float valor){

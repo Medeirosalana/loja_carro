@@ -22,12 +22,12 @@ public class CustosDAO {
     }
      public boolean inset(Custos custo){
         if(db.open()){
-            sql = "INSERT INTO tb_custos(cus_valor, cus_descricao)VALUES(?,?)";
+            sql = "INSERT INTO tb_custos(cus_valor, cus_descricao, cus_car_id)VALUES(?,?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
-                ps.setString(1, custo.getDescrissao());
-                ps.setFloat(2, custo.getValor());
-               
+                ps.setFloat(1, custo.getValor());
+                ps.setString(2, custo.getDescrissao());
+               ps.setInt(3, custo.getCarro().getId());
                 
                 if(ps.executeUpdate() == 1){
                     ps.close();
@@ -125,9 +125,9 @@ public class CustosDAO {
                 while(rs.next()){
                 Custos cli = new Custos();
                 CarrosDAO dao = new CarrosDAO();
-                cli.setId(rs.getInt("cus_id"));
-                cli.setDescrissao(rs.getString("cus_descricao"));
-                cli.setValor(rs.getFloat("cus_valor"));
+                cli.setId(rs.getInt(1));
+                cli.setDescrissao(rs.getString(3));
+                cli.setValor(rs.getFloat(2));
                 cli.setCarro(dao.select(rs.getInt(4)));
                 clientes.add(cli);
                 }

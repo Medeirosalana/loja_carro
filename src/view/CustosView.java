@@ -23,7 +23,7 @@ import model.Custos;
 public class CustosView extends javax.swing.JFrame {
     DefaultTableModel model;
     Carros carros;
-    Custos cus ;
+    Custos custo ;
     /**
      * Creates new form CustosView
      */
@@ -35,11 +35,15 @@ public class CustosView extends javax.swing.JFrame {
     public CustosView(DefaultTableModel model, Carros carro){
     this.model = model;
     this.carros = carro;
+    
     initComponents();
      loadtable();
     calcularTotal();
     
+    
+    
     }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,9 +60,8 @@ public class CustosView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
         lbtotal = new javax.swing.JLabel();
-        tftcusto = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
         lvvalort = new javax.swing.JLabel();
         tfvalort = new javax.swing.JTextField();
         lblucro = new javax.swing.JLabel();
@@ -68,6 +71,8 @@ public class CustosView extends javax.swing.JFrame {
         btExcluir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jButton2 = new javax.swing.JButton();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
 
         setResizable(false);
 
@@ -83,38 +88,27 @@ public class CustosView extends javax.swing.JFrame {
                 "ID", "Nome", "Valor"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Float.class
-            };
             boolean[] canEdit = new boolean [] {
-                true, false, false
+                false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        Table.setEditingRow(0);
-        Table.setEnabled(false);
+        Table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Table);
 
         lbtotal.setText("Total Custos");
 
-        tftcusto.setEditable(false);
-        tftcusto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tftcustoActionPerformed(evt);
-            }
-        });
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%", "50%", "55%", "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jList1);
@@ -146,6 +140,20 @@ public class CustosView extends javax.swing.JFrame {
         });
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Editar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,7 +163,7 @@ public class CustosView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbnome)
@@ -165,34 +173,35 @@ public class CustosView extends javax.swing.JFrame {
                         .addComponent(lbvalor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btsalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btCancelar)
                         .addGap(61, 61, 61))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(lblucro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(tflucro, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 5, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbtotal)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tftcusto, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lvvalort)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tfvalort, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lvvalort)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfvalort, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbtotal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jFormattedTextField2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(148, 148, 148)
+                                .addGap(65, 65, 65)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btExcluir))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,7 +221,9 @@ public class CustosView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btExcluir)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btExcluir)
+                    .addComponent(jButton2))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
@@ -220,7 +231,7 @@ public class CustosView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lbtotal)
-                                    .addComponent(tftcusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(tfvalort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,19 +259,30 @@ public class CustosView extends javax.swing.JFrame {
         // TODO add your handling code here:
         Custos cus = new Custos();
         CustosController control = new CustosController();
+        CarrosDAO dao = new CarrosDAO();
+        Carros id = dao.select(carros.getId());
+        String valorFormatado = jFormattedTextField1.getText().replace(".", "");
+        valorFormatado = valorFormatado.replace(",", ".");
+        
+        float valor = Float.parseFloat(valorFormatado);
+        System.out.println(valor);
        if(tfnome.getText().equals("")|| jFormattedTextField1.getText().equals("")){JOptionPane.showMessageDialog(null, "Preencha todos os campos");}
-        if(cus == null){
-            if(control.adicionar(tfnome.getText(), Float.parseFloat(jFormattedTextField1.getText()))){
+        if(custo == null){
+            if(control.adicionar(valor, tfnome.getText(), dao.select(id.getId()) )){
             loadtable();
             limpar();
             }else{JOptionPane.showMessageDialog(null, "Erro ao adicionar");}
         
         
         }else{
-            if(control.atualizar(cus.getId(), tfnome.getText(), Float.parseFloat(jFormattedTextField1.getText()))){
+            
+            
+            
+            if(control.atualizar(cus.getId(), tfnome.getText(), valor)){
                 
             loadtable();
             limpar();
+            
             }else{
             JOptionPane.showMessageDialog(null, "Erro ao editar");
             }
@@ -269,19 +291,15 @@ public class CustosView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btsalvarActionPerformed
 
-    private void tftcustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tftcustoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tftcustoActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if(tftcusto.getText().equals("")){
-                tftcusto.requestFocus();
+        if(jFormattedTextField2.getText().equals("")){
+                jFormattedTextField2.requestFocus();
                 return;
                 }
             
            try{
-                float valor = Float.parseFloat(tftcusto.getText());
+                float valor = Float.parseFloat(jFormattedTextField2.getText());
                 float desconto = 0;
                 float valortotal = 0;
                 switch(jList1.getSelectedIndex()){
@@ -355,10 +373,27 @@ public class CustosView extends javax.swing.JFrame {
             }catch(NumberFormatException error){
                 JOptionPane.showMessageDialog(null, "Forneça apenas números");
                 error.toString();
-                tftcusto.setText("");
-                tftcusto.requestFocus();
+                jFormattedTextField2.setText("");
+                jFormattedTextField2.requestFocus();
             }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void TableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableMouseClicked
+        // TODO add your handling code here:
+         
+        int i [] = Table.getSelectedRows();
+        tfnome.setText((String) Table.getValueAt(i[0], 1));
+        jFormattedTextField1.setText(valorFormatado((String) Table.getValueAt(i[0], 2)));
+    }//GEN-LAST:event_TableMouseClicked
 
    
 
@@ -368,7 +403,9 @@ public class CustosView extends javax.swing.JFrame {
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btsalvar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -379,7 +416,6 @@ public class CustosView extends javax.swing.JFrame {
     private javax.swing.JLabel lvvalort;
     private javax.swing.JTextField tflucro;
     private javax.swing.JTextField tfnome;
-    private javax.swing.JTextField tftcusto;
     private javax.swing.JTextField tfvalort;
     // End of variables declaration//GEN-END:variables
 public  void loadtable(){
@@ -400,7 +436,7 @@ public  void loadtable(){
                valor = valor.replace(",", ".");
                total += Float.parseFloat(valor);
                }
-               tftcusto.setText(""+ total);
+               jFormattedTextField2.setText(""+ total);
             }
  private void limpar(){
  tfnome.setText("");
@@ -408,6 +444,11 @@ public  void loadtable(){
  
  }
 
+    private String valorFormatado(String string) {
+       String valorFormatado = jFormattedTextField1.getText().replace(".", ",");
+        return valorFormatado;
+    }
 
+   
  
 }
