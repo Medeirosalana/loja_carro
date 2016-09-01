@@ -3,13 +3,13 @@ package model;
 public class CartasDeCreditos {
 
     private int id;
-    private int cota;
-    private int grupo;
-    private int proposta;
+    private String cota;
+    private String grupo;
+    private float proposta;
     private int prazo;
-    private int parcela;
-    private int valor_inicial;
-    private int valor_final;
+    private float parcela;
+    private float valor_inicial;
+    private float valor_final;
 
     public int getId() {
         return id;
@@ -19,27 +19,27 @@ public class CartasDeCreditos {
         this.id = id;
     }
 
-    public int getCota() {
+    public String getCota() {
         return cota;
     }
 
-    public void setCota(int cota) {
+    public void setCota(String cota) {
         this.cota = cota;
     }
 
-    public int getGrupo() {
+    public String getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(int grupo) {
+    public void setGrupo(String grupo) {
         this.grupo = grupo;
     }
 
-    public int getProposta() {
+    public float getProposta() {
         return proposta;
     }
 
-    public void setProposta(int proposta) {
+    public void setProposta(float proposta) {
         this.proposta = proposta;
     }
 
@@ -51,28 +51,34 @@ public class CartasDeCreditos {
         this.prazo = prazo;
     }
 
-    public int getParcela() {
+    public float getParcela() {
         return parcela;
     }
 
-    public void setParcela(int parcela) {
+    public void setParcela(float parcela) {
         this.parcela = parcela;
     }
 
-    public int getValor_inicial() {
+    public float getValor_inicial() {
         return valor_inicial;
     }
 
-    public void setValor_inicial(int valor_inicial) {
+    public void setValor_inicial(float valor_inicial) {
         this.valor_inicial = valor_inicial;
     }
 
-    public int getValor_final() {
+    public float getValor_final() {
         return valor_final;
     }
 
-    public void setValor_final(int valor_final) {
+    public void setValor_final(float valor_final) {
         this.valor_final = valor_final;
     }
-    
+
+    @Override
+    public String toString() {
+        return "CartasDeCreditos{" + "id=" + id + ", cota=" + cota + ", grupo=" + grupo + ", proposta=" + proposta + ", prazo=" + prazo + ", parcela=" + parcela + ", valor_inicial=" + valor_inicial + ", valor_final=" + valor_final + '}';
+    }
+
+        
 }

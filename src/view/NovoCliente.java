@@ -7,6 +7,7 @@ package view;
 
 import controller.ClienteController;
 import dao.AprovacaoDAO;
+import dao.ClienteDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Aprovacao;
@@ -17,7 +18,7 @@ import model.Clientes;
  * @author Alana
  */
 public class NovoCliente extends javax.swing.JFrame {
-    Clientes cliente;
+    Clientes clientes;
     DefaultTableModel model;
     /**
      * Creates new form NovoCliente
@@ -27,12 +28,14 @@ public class NovoCliente extends javax.swing.JFrame {
     }
     public NovoCliente(DefaultTableModel model, Clientes cliente){
         this.model = model;
-        this.cliente = cliente;
+        this.clientes = cliente;
         initComponents();
+        cliente.getId();
         tfnome.setText(cliente.getNome());
         tfagencia.setText(cliente.getAgencia());
         tfconta.setText(cliente.getConta());
         formcpf.setText(cliente.getCpf());
+      
     }
     
 
@@ -67,6 +70,8 @@ public class NovoCliente extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
 
         jRadioButton2.setText("jRadioButton2");
+
+        setResizable(false);
 
         lbnome.setText("Nome");
 
@@ -175,12 +180,14 @@ public class NovoCliente extends javax.swing.JFrame {
         Clientes cli = new Clientes();
         ClienteController control = new ClienteController();
         AprovacaoDAO dao = new AprovacaoDAO();
-   
+    ClienteDAO daos = new ClienteDAO();
+        cli = daos.select(clientes.getId());
+         System.out.println(clientes.toString());
         if(tfnome.getText().equals("")||tfagencia.getText().equals("")||tfconta.getText().equals("")||formcpf.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
         
         }else{
-            if(cli.getCpf() == null){
+            if(clientes == null){
             
                 if(control.adicionar(tfnome.getText(),NovoCliente.clear( formcpf.getText()), tfagencia.getText(), tfconta.getText(), dao.select(jComboBox1.getSelectedIndex()))){
                     
@@ -192,7 +199,7 @@ public class NovoCliente extends javax.swing.JFrame {
         
        
         else{
-            if(control.atualizar(cli.getId(), tfnome.getText(), tfagencia.getText(), tfconta.getText(), dao.select(jComboBox1.getSelectedIndex()))){
+            if(control.atualizar(clientes.getId(), tfnome.getText(), tfagencia.getText(), tfconta.getText(), dao.select(jComboBox1.getSelectedIndex()))){
             JOptionPane.showMessageDialog(null, "Cliente atualizado");
             }else{
             JOptionPane.showMessageDialog(null, "Erro ao editar");

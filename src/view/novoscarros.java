@@ -294,7 +294,8 @@ public class novoscarros extends javax.swing.JDialog {
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-
+       
+        novoscarros.this.setVisible(false);
     }//GEN-LAST:event_btCancelarActionPerformed
 
    

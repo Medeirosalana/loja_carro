@@ -115,7 +115,12 @@ public class CarroView extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Excluir Custos");
+        jButton2.setText("Menu Principal");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,15 +183,15 @@ public class CarroView extends javax.swing.JFrame {
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         int i [] = jTable1.getSelectedRows();
         if(i.length == 0){
-            JOptionPane.showMessageDialog(null, "Selecione um contato");
+            JOptionPane.showMessageDialog(null, "Selecione um carro");
         }else if (i.length > 1){
-            JOptionPane.showMessageDialog(null, "Selecione apenas um contato");
+            JOptionPane.showMessageDialog(null, "Selecione apenas um carro");
         }else{
         Carros carro = new Carros();   
               
         
          carro.setPlaca(NovoCarros.clear((String) jTable1.getValueAt(i[0],3)));
-      
+         carro.setModelo((String) jTable1.getValueAt(i[0], 0));
        
         int resposta = JOptionPane.showConfirmDialog(null, "Dejesa excluir "+ carro.getModelo()+" ?");
             if (resposta == 0){
@@ -202,9 +207,9 @@ public class CarroView extends javax.swing.JFrame {
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
       int i [] = jTable1.getSelectedRows();
         if(i.length == 0){
-            JOptionPane.showMessageDialog(null, "Selecione um contato");
+            JOptionPane.showMessageDialog(null, "Selecione um carro");
         }else if (i.length > 1){
-            JOptionPane.showMessageDialog(null, "Selecione apenas um contato");
+            JOptionPane.showMessageDialog(null, "Selecione apenas um carro");
         }else{       
             
             CarrosDAO dao = new CarrosDAO();       
@@ -234,9 +239,9 @@ public class CarroView extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int i [] = jTable1.getSelectedRows();
         if(i.length == 0){
-            JOptionPane.showMessageDialog(null, "Selecione um contato");
+            JOptionPane.showMessageDialog(null, "Selecione um carro");
         }else if (i.length > 1){
-            JOptionPane.showMessageDialog(null, "Selecione apenas um contato");
+            JOptionPane.showMessageDialog(null, "Selecione apenas um carro");
         }else{    
             Carros carros = new Carros(); 
             carros.setPlaca(NovoCarros.clear((String) jTable1.getValueAt(i[0],3)));
@@ -249,9 +254,9 @@ public class CarroView extends javax.swing.JFrame {
         // TODO add your handling code here:
          int i [] = jTable1.getSelectedRows();
         if(i.length == 0){
-            JOptionPane.showMessageDialog(null, "Selecione um contato");
+            JOptionPane.showMessageDialog(null, "Selecione um carro");
         }else if (i.length > 1){
-            JOptionPane.showMessageDialog(null, "Selecione apenas um contato");
+            JOptionPane.showMessageDialog(null, "Selecione apenas um carro");
         }else{
             Carros carro = new Carros();
             CarrosDAO dao = new CarrosDAO();
@@ -263,6 +268,13 @@ public class CarroView extends javax.swing.JFrame {
             view.setVisible(true);
         }
     }//GEN-LAST:event_btCustosActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Principal p = new Principal();
+        p.setVisible(true);
+        CarroView.this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
    public void open(){
    CarroView car = new CarroView();

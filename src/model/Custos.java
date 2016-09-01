@@ -38,6 +38,11 @@ public class Custos {
     public void setDescrissao(String descrissao) {
         this.descrissao = descrissao;
     }
+
+    @Override
+    public String toString() {
+        return "Custos{" + "id=" + id + ", valor=" + valor + ", descrissao=" + descrissao + ", carro=" + carro + '}';
+    }
   
 
     

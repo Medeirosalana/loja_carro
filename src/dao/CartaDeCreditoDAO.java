@@ -24,13 +24,13 @@ public class CartaDeCreditoDAO {
             sql = "INSERT INTO tb_cartas_de_creiditos(cdc_cota, cdc_grupo, cdc_proposta, cdc_prazo, cdc_parcela, cdc_valor_inicial, cdc_valor_final)VALUES(?,?,?,?,?,?,?)";
             try{
                 ps = db.connerction.prepareStatement(sql);
-                ps.setInt(1, cartas.getCota());
-                ps.setInt(2, cartas.getGrupo());
-                ps.setInt(3, cartas.getProposta());
+                ps.setString(1, cartas.getCota());
+                ps.setString(2, cartas.getGrupo());
+                ps.setFloat(3, cartas.getProposta());
                 ps.setInt(4, cartas.getPrazo());
-                ps.setInt(5, cartas.getParcela());
-                ps.setInt(6, cartas.getValor_inicial());
-                ps.setInt(7, cartas.getValor_final());
+                ps.setFloat(5, cartas.getParcela());
+                ps.setFloat(6, cartas.getValor_inicial());
+                ps.setFloat(7, cartas.getValor_final());
                 if(ps.executeUpdate() == 1){
                     ps.close();
                     db.close();
@@ -63,16 +63,17 @@ public class CartaDeCreditoDAO {
     }
     public boolean update(CartasDeCreditos cartas){
         if(db.open()){
-        sql = "UPDATE tb_cartas_de_creiditos SET cdc_cota = ?, cdc_grupo = ?,cdc_proposta = ?, cdc_prazo = ?,cdc_valor_final = ?,cdc_valor_inicial = ?  WHERE cdc_id =?";
+        sql = "UPDATE tb_cartas_de_creiditos SET cdc_cota = ?, cdc_grupo = ?,cdc_proposta = ?, cdc_prazo = ?,cdc_valor_final = ?,cdc_valor_inicial = ?, cdc_parcela = ?  WHERE cdc_id =?";
             try{
             ps = db.connerction.prepareStatement(sql);
-            ps.setInt(1, cartas.getCota());
-            ps.setInt(2, cartas.getGrupo());
-            ps.setInt(3, cartas.getProposta());
+            ps.setString(1, cartas.getCota());
+            ps.setString(2, cartas.getGrupo());
+            ps.setFloat(3, cartas.getProposta());
             ps.setInt(4, cartas.getPrazo());
-            ps.setInt(5, cartas.getValor_final());
-            ps.setInt(6, cartas.getValor_inicial());
-            ps.setInt(7, cartas.getId());
+            ps.setFloat(5, cartas.getValor_final());
+            ps.setFloat(6, cartas.getValor_inicial());
+            ps.setFloat(7, cartas.getParcela());
+            ps.setInt(8, cartas.getId());
             if(ps.executeUpdate() == 1){
             ps.close();
             db.close();
@@ -89,20 +90,20 @@ public class CartaDeCreditoDAO {
     public CartasDeCreditos select(int id){
         if(db.open()){
             CartasDeCreditos carta = new CartasDeCreditos();
-            sql ="SELECT * FROM tb_cartas_de_creiditos WHERE cdc_id";
+            sql ="SELECT * FROM tb_cartas_de_creiditos WHERE cdc_id = ?";
             try{
                 ps = db.connerction.prepareStatement(sql);
                 ps.setInt(1, id);
                 rs = ps.executeQuery();
                 if(rs.next()){                
                 carta.setId(rs.getInt(1));
-                carta.setCota(rs.getInt(2));
-                carta.setGrupo(rs.getInt(3));
-                carta.setProposta(rs.getInt(4));
+                carta.setCota(rs.getString(2));
+                carta.setGrupo(rs.getString(3));
+                carta.setProposta(rs.getFloat(4));
                 carta.setPrazo(rs.getInt(5));
-                carta.setParcela(rs.getInt(6));
-                carta.setValor_inicial(rs.getInt(7));
-                carta.setValor_final(rs.getInt(8));
+                carta.setParcela(rs.getFloat(6));
+                carta.setValor_inicial(rs.getFloat(7));
+                carta.setValor_final(rs.getFloat(8));
                 rs.close();
                 ps.close();
                 db.close();
@@ -130,13 +131,13 @@ public class CartaDeCreditoDAO {
                  CartasDeCreditos carta = new CartasDeCreditos();
                 
                 carta.setId(rs.getInt(1));
-                carta.setCota(rs.getInt(2));
-                carta.setGrupo(rs.getInt(3));
-                carta.setProposta(rs.getInt(4));
+                carta.setCota(rs.getString(2));
+                carta.setGrupo(rs.getString(3));
+                carta.setProposta(rs.getFloat(4));
                 carta.setPrazo(rs.getInt(5));
-                carta.setParcela(rs.getInt(6));
-                carta.setValor_inicial(rs.getInt(7));
-                carta.setValor_final(rs.getInt(8));
+                carta.setParcela(rs.getFloat(6));
+                carta.setValor_inicial(rs.getFloat(7));
+                carta.setValor_final(rs.getFloat(8));
                 cartas.add(carta);
                 }
                 rs.close();
@@ -161,13 +162,13 @@ public class CartaDeCreditoDAO {
                 while(rs.next()){
                 CartasDeCreditos carta = new CartasDeCreditos();                
                 carta.setId(rs.getInt(1));
-                carta.setCota(rs.getInt(2));
-                carta.setGrupo(rs.getInt(3));
-                carta.setProposta(rs.getInt(4));
+                carta.setCota(rs.getString(2));
+                carta.setGrupo(rs.getString(3));
+                carta.setProposta(rs.getFloat(4));
                 carta.setPrazo(rs.getInt(5));
-                carta.setParcela(rs.getInt(6));
-                carta.setValor_inicial(rs.getInt(7));
-                carta.setValor_final(rs.getInt(8));
+                carta.setParcela(rs.getFloat(6));
+                carta.setValor_inicial(rs.getFloat(7));
+                carta.setValor_final(rs.getFloat(8));
                 
                 cartas.add(carta);
                 }

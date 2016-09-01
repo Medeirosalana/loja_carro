@@ -50,6 +50,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jButton3.setText("Cartas de creditos");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,6 +87,7 @@ public class Principal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CarroView car = new CarroView();
        car.open();
+       Principal.this.setVisible(false);
        
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -89,7 +95,15 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ClienteView view = new ClienteView();
         view.setVisible(true);
+        Principal.this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        CartasView view = new CartasView();
+        view.setVisible(true);
+        Principal.this.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

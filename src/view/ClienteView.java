@@ -43,7 +43,10 @@ public class ClienteView extends javax.swing.JFrame {
         btnovo = new javax.swing.JButton();
         bteditar = new javax.swing.JButton();
         btexcluir = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -85,6 +88,20 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Atualiza");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Menu Principal");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,8 +113,12 @@ public class ClienteView extends javax.swing.JFrame {
                 .addComponent(bteditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btexcluir)
-                .addContainerGap(404, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +129,9 @@ public class ClienteView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btexcluir)
                     .addComponent(bteditar)
-                    .addComponent(btnovo))
+                    .addComponent(btnovo)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(25, 25, 25))
         );
 
@@ -168,11 +191,26 @@ public class ClienteView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btexcluirActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        loadtable();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Principal p = new Principal();
+        p.setVisible(true);
+        ClienteView.this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bteditar;
     private javax.swing.JButton btexcluir;
     private javax.swing.JButton btnovo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
@@ -180,7 +218,7 @@ public  void loadtable(){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         for(Clientes cliente: new ClienteController().listar(null)){
-        model.addRow(new Object[]{cliente.getId(),cliente.getNome(), cliente.getAgencia(), cliente.getConta(), cliente.getAprovacao().getAprovacao(),NovoCliente.format(cliente.getCpf())});
+        model.addRow(new Object[]{cliente.getId(),cliente.getNome(), cliente.getAgencia(), cliente.getConta(), cliente.getAprovacao().getAprovacao().toUpperCase(),NovoCliente.format(cliente.getCpf())});
             
         }
     
